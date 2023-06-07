@@ -1,12 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0jjpoa6" targetNamespace="http://bpmn.io/schema/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
-  <bpmn:process id="Process_15sylor" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0jjpoa6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:collaboration id="Collaboration_0fkcj67">
+    <bpmn:participant id="Participant_0hpkchk" name="AcmeBikes" processRef="Process_15sylor" />
+    <bpmn:participant id="Participant_183sicy" name="Rivendite" processRef="Process_0vf7v0n" />
+    <bpmn:participant id="Participant_19ce4st" name="Magazzino principale" processRef="Process_1hh8zan" />
+    <bpmn:participant id="Participant_0kd7f4s" name="Magazzini secondari" processRef="Process_13mz0l3" />
+    <bpmn:participant id="Participant_01ay44s" name="Fornitore esterno" processRef="Process_1czk4eh" />
+    <bpmn:participant id="Participant_0qjnwbh" name="Corriere esterno" processRef="Process_12azd5e" />
+    <bpmn:participant id="Participant_1mt8bdd" name="Banca" processRef="Process_142xq8g" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_15sylor" isExecutable="true" />
+  <bpmn:process id="Process_0vf7v0n" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1" />
   </bpmn:process>
+  <bpmn:process id="Process_1hh8zan" isExecutable="false" />
+  <bpmn:process id="Process_13mz0l3" isExecutable="false" />
+  <bpmn:process id="Process_1czk4eh" isExecutable="false" />
+  <bpmn:process id="Process_12azd5e" isExecutable="false" />
+  <bpmn:process id="Process_142xq8g" isExecutable="false" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_15sylor">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0fkcj67">
+      <bpmndi:BPMNShape id="Participant_0hpkchk_di" bpmnElement="Participant_0hpkchk" isHorizontal="true">
+        <dc:Bounds x="129" y="370" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_183sicy_di" bpmnElement="Participant_183sicy" isHorizontal="true">
+        <dc:Bounds x="129" y="650" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="179" y="159" width="36" height="36" />
+        <dc:Bounds x="179" y="752" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_19ce4st_di" bpmnElement="Participant_19ce4st" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0kd7f4s_di" bpmnElement="Participant_0kd7f4s" isHorizontal="true">
+        <dc:Bounds x="870" y="80" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_01ay44s_di" bpmnElement="Participant_01ay44s" isHorizontal="true">
+        <dc:Bounds x="1570" y="80" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0qjnwbh_di" bpmnElement="Participant_0qjnwbh" isHorizontal="true">
+        <dc:Bounds x="870" y="370" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1mt8bdd_di" bpmnElement="Participant_1mt8bdd" isHorizontal="true">
+        <dc:Bounds x="870" y="650" width="600" height="250" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
