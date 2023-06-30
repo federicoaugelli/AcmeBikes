@@ -1,4 +1,4 @@
-import subprocess, platform
+import subprocess, platform, signal, os
 
 path = "../camunda/"
 
@@ -11,6 +11,10 @@ if current_platform == "Windows":
 else:
     proc = subprocess.Popen([path + "start.sh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../bank")
+courier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8001"], cwd="../courier")
+geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"], cwd="../geoloc")
+
 input("type something to exit the program...")
 
 if current_platform == "Windows":
@@ -19,4 +23,7 @@ if current_platform == "Windows":
 else:
     subprocess.run(path + "shutdown.sh")
 
+os.killpg(os.getpgid(bank.pid), signal.SIGINT)
+os.killpg(os.getpgid(courier.pid), signal.SIGINT)
+os.killpg(os.getpgid(geoloc.pid), signal.SIGINT)
 
