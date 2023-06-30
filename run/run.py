@@ -1,6 +1,6 @@
 import subprocess, platform
 
-path = "../camunda-bpm-run-7.19.0/"
+path = "../camunda/"
 
 current_platform = platform.system()
 
