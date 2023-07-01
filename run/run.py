@@ -1,14 +1,13 @@
 import subprocess, platform, signal, os
 
-path = "../camunda/"
-
 current_platform = platform.system()
 
-
-if current_platform == "Windows":
+if "Windows" in current_platform:
+    path = "..\\camunda\\"
     proc = subprocess.Popen([path + "start.bat"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 else:
+    path = "../camunda/"
     proc = subprocess.Popen([path + "start.sh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../backend/bank")
@@ -17,7 +16,7 @@ geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"],
 
 input("type enter to exit the program...")
 
-if current_platform == "Windows":
+if "Windows" in current_platform:
     subprocess.run(path + "shutdown.bat")
 
 else:
