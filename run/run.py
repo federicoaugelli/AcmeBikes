@@ -11,11 +11,11 @@ if current_platform == "Windows":
 else:
     proc = subprocess.Popen([path + "start.sh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../bank")
-courier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8001"], cwd="../courier")
-geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"], cwd="../geoloc")
+bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../backend/bank")
+courier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8001"], cwd="../backend/courier")
+geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"], cwd="../backend/geoloc")
 
-input("type something to exit the program...")
+input("type enter to exit the program...")
 
 if current_platform == "Windows":
     subprocess.run(path + "shutdown.bat")
