@@ -1,16 +1,15 @@
 import sqlite3
+'''create database if not exists'''
 path = "/database/bank.db"
-
 database = sqlite3.connect(oath)
 db = database.cursor()
-
 sql = 'create table if not exists ' + 'users' + ' (id integer PRIMARY KEY, name text NOT NULL, amount real, username text NOT NULL, password text NOT NULL)'
 db.execute(sql)
-
 sql = 'create table if not exists ' + 'history' + ' (tx_id integer, sender integer NOT NULL, receiver integer NOT NULL, amount real NOT NULL, FOREIGN KEY(sender) REFERENCES users(id), FOREIGN KEY(receiver) REFERENCES users(id))'
 db.execute(sql)
 database.commit()
 
+'''connect to database'''
 def connect(db):
     connection = None
     cursor = None
@@ -21,56 +20,64 @@ def connect(db):
         return None, e
     return connection, cursor
 
-def register(name, username, password):
+'''insert user into database'''
+def insert_user(name, username, password):
     try:
-        data  = """INSERT INTO users
-                          (name, amount, username, password)
-                          VALUES (?, ?, ?, ?);"""
+        data  = """INSERT INTO users (name, amount, username, password) VALUES (?, ?, ?, ?);"""
         data_tuple = (name, 100, username, password)
-
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        return("user successfull registered")
+        return(f"{username} created")
     except sqlite3.Error as e:
-        return("Failed to insert data", e)
+        return("Failed to create user: ", e)
 
-def pay(sender, receiver, amount):
+'''get user amount given user id'''
+def get_user_balance(user_id):
     try:
-        connection, cursor = connect(path)
-        s_amount = """SELECT amount FROM users WHERE id=?"""
-        
-        cursor.execute(s_amount, sender)
-        sender_amount = cursor.fetchall()
+        amount = """SELECT amount FROM users WHERE id=?"""
+        connection, cursor = connect(path)        
+        cursor.execute(amount, user_id)
+        fetch_amount = cursor.fetchall()
+        connection.commit()
+        return fetch_amount
+    except sqlite3.Error as e:
+        return(f"cannot get user {user_id}")
 
-        if not sender_amount >= amount:
-            return None
-
-        decrease_sender_amount = """UPDATE users SET amount = amount - ? WHERE id = ?"""
-        decrease_data = (ampunt, sender)
-        cursor.execute(decrease_sender_amount, decrease_data)
-
-        increase_receiver_amount = """UPDATE users SET amount = amount + ? WHERE id = ? """
-        increase_data = (amount, receiver)
-        cursor.execute(increase_receiver_amount, increase_data)
-
+'''insert transaction into database'''
+def insert_tx(sender, receiver, amount):
+    try:
         tx = """INSERT INTO history (sender, receiver, amount) VALUES (?, ?, ?);"""
         tx_data = (sender, receiver, amount)
+        connection, cursor = connect(path)
         cursor.execute(tx, tx_data)
-
-        tx_id = cursor.lastrowid
-
         connection.commit()
-
-        return(f"tx id: {tx_id}")
+        tx_id = cursor.lastrowid
+        return tx_id
     except sqlite3.Error as e:
-        return(str(e))
+        return(f"cannot insert transaction")
 
-
-def verify_token(tx_id, amount):
+'''get transaction given transaction id'''
+def get_tx(tx_id):
     try.
+        tx = """SELECT sender, receiver, amount FROM history WHERE tx_id=?"""
+        connection, cursor = connect(path)
+        cursor.execute(tx, tx_id)
+        tx_data = cursor.fetchall()
+        connection.commit()
+        return tx_data
+    except sqlite3.Error as e:
+        return(f"cannot get transaction with id: {tx_id}")
 
-    except sqlite3.Error as e
-
-
+'''update balance'''
+def update_user_balance(user_id, amount):
+    try:
+        user_data = """UPDATE users SET amount = amount + ? WHERE id = ?"""
+        user_var = (amount, user_id)
+        connection, cursor = connect(path)
+        cursor.execute(user_data, user_var)
+        connection.commit()
+        return("balance updated")
+    except sqlite3.Error as e:
+        return(f"cannot update user balance")
 
