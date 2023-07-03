@@ -5,7 +5,7 @@ database = sqlite3.connect(path)
 db = database.cursor()
 sql = 'create table if not exists ' + 'users' + ' (id integer PRIMARY KEY, name text NOT NULL, amount real, username text NOT NULL, password text NOT NULL)'
 db.execute(sql)
-sql = 'create table if not exists ' + 'history' + ' (tx_id integer, sender integer NOT NULL, receiver integer NOT NULL, amount real NOT NULL, FOREIGN KEY(sender) REFERENCES users(id), FOREIGN KEY(receiver) REFERENCES users(id))'
+sql = 'create table if not exists ' + 'history' + ' (tx_id integer PRIMARY KEY, sender integer NOT NULL, receiver integer NOT NULL, amount real NOT NULL, FOREIGN KEY(sender) REFERENCES users(id), FOREIGN KEY(receiver) REFERENCES users(id))'
 db.execute(sql)
 database.commit()
 
@@ -37,10 +37,8 @@ def get_user_balance(user_id):
     try:
         amount = """SELECT amount FROM users WHERE id=?"""
         connection, cursor = connect(path)        
-        cursor.execute(amount, user_id)
-        fetch_amount = cursor.fetchall()
-        connection.commit()
-        return fetch_amount
+        fetch_amount = cursor.execute(amount, (user_id, ))
+        return fetch_amount.fetchone()
     except sqlite3.Error as e:
         return(f"cannot get user {user_id}")
 
@@ -60,12 +58,10 @@ def insert_tx(sender, receiver, amount):
 '''get transaction given transaction id'''
 def get_tx(tx_id):
     try:
-        tx = """SELECT sender, receiver, amount FROM history WHERE tx_id=?"""
+        tx = """SELECT * FROM history WHERE tx_id=?"""
         connection, cursor = connect(path)
-        cursor.execute(tx, tx_id)
-        tx_data = cursor.fetchall()
-        connection.commit()
-        return tx_data
+        tx_exec = cursor.execute(tx, (tx_id, ))
+        return tx_exec.fetchone()
     except sqlite3.Error as e:
         return(f"cannot get transaction with id: {tx_id}")
 
