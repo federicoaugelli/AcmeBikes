@@ -10,8 +10,8 @@ def read_root():
 @app.route("/user", methods=["POST, DELETE"])
 def user():
     if request.method == "POST":
-    user_data = db.insert_user("federico", "frdrk", "password")
-    return(user_data)
+        user_data = db.insert_user("federico", "frdrk", "password")
+        return(user_data)
 
     #elif request.method == "DELETE":
 

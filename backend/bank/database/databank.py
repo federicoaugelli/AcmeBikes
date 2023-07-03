@@ -1,7 +1,7 @@
 import sqlite3
 '''create database if not exists'''
-path = "/database/bank.db"
-database = sqlite3.connect(oath)
+path = "bank.db"
+database = sqlite3.connect(path)
 db = database.cursor()
 sql = 'create table if not exists ' + 'users' + ' (id integer PRIMARY KEY, name text NOT NULL, amount real, username text NOT NULL, password text NOT NULL)'
 db.execute(sql)
@@ -59,7 +59,7 @@ def insert_tx(sender, receiver, amount):
 
 '''get transaction given transaction id'''
 def get_tx(tx_id):
-    try.
+    try:
         tx = """SELECT sender, receiver, amount FROM history WHERE tx_id=?"""
         connection, cursor = connect(path)
         cursor.execute(tx, tx_id)
