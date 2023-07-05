@@ -1,35 +1,41 @@
-from typing import Union
-from fastapi import FastAPI
 import database.databank as db
-from pydantic import BaseModel
-
-class payment_body(BaseModel):
-    sender: int
-    receiver: int
-    amount: float
-
-class check_token_body(BaseModel):
-    tx_id: int
-    amount: float
-
-class insert_user(BaseModel):
-    name: str
-    username: str
-    password: str
+from fastapi import FastAPI, status, HTTPException, Depends, Body
+import auth.crypt_utils as crypt_utils
+from auth.auth_bearer import JWTBearer
+from auth.auth_handler import signJWT
+from model import payment_body, check_token_body, insert_user, user_login_schema
 
 app = FastAPI()
+
+@app.post("/login", tags=["user"])
+def user_login(body: user_login_schema = Body(...)):
+    user = db.get_user_by_username(body.username)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect username or password"
+        )
+
+    hashed_pass = user[4]
+    if not crypt_utils.verify_password(body.password, hashed_pass):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect email or password"
+        )
+    # I sign it with user id
+    return signJWT(user[0])
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-@app.post("/user")
-def user(body: insert_user):
-    user_data = db.insert_user(body.name, body.username, body.password)
+@app.post("/user", tags=["user"])
+def user_login_schema(body: insert_user):
+    user_data = db.insert_user(body.name, body.username, crypt_utils.get_hashed_password(body.password))
     return(user_data)
 
 @app.post("/pay")
-def pay(body: payment_body):
+def pay(body: payment_body, dependencies=Depends(JWTBearer())):
     try:
         amount = body.amount
         sender_balance = db.get_user_balance(body.sender)

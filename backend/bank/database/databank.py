@@ -41,6 +41,16 @@ def get_user_balance(user_id):
         return fetch_amount.fetchone()
     except sqlite3.Error as e:
         return(f"cannot get user {user_id}")
+    
+'''get transaction given transaction id'''
+def get_user_by_username(username):
+    try:
+        user_query = """SELECT * FROM users WHERE username=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (username, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get transaction with id: {username}")
 
 '''insert transaction into database'''
 def insert_tx(sender, receiver, amount):
