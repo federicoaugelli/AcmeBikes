@@ -1,6 +1,7 @@
 from fastapi import FastAPI, status, HTTPException, Depends, Body
-from model import geo_distance
+from model import geo_distance, user_address
 from geopy.distance import geodesic
+from geopy.geocoders import Nominatim
 
 app = FastAPI()
 
@@ -14,3 +15,10 @@ def calculate_distance(body: geo_distance):
     receiver = (body.receiver_latitude, body.receiver_longitude)
     distance = geodesic(sender, receiver).kilometers
     return(distance)
+
+@app.post("/distance/address", tags=["geolocation"])
+def retreive_address(body: user_address):
+    geolocator = Nominatim(user_agent="my_app")
+    address = body.address
+    location = geolocator.geocode(address)
+    return location.latitude, location.longitude

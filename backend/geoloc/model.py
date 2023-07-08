@@ -5,3 +5,6 @@ class geo_distance(BaseModel):
     sender_longitude: float
     receiver_latitude: float
     receiver_longitude: float
+
+class user_address(BaseModel):
+    address: str
