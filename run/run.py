@@ -13,6 +13,7 @@ else:
 bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../backend/bank")
 courier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8001"], cwd="../backend/courier")
 geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"], cwd="../backend/geoloc")
+supplier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8003"], cwd="../backend/supplier")
 
 input("type enter to exit the program...")
 
@@ -25,4 +26,5 @@ else:
 os.killpg(os.getpgid(bank.pid), signal.SIGINT)
 os.killpg(os.getpgid(courier.pid), signal.SIGINT)
 os.killpg(os.getpgid(geoloc.pid), signal.SIGINT)
+os.killpg(os.getpgid(supplier.pid), signal.SIGINT)
 
