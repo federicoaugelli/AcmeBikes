@@ -5,9 +5,9 @@ database = sqlite3.connect(path)
 db = database.cursor()
 sql = 'create table if not exists ' + 'component' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, qty integer, bookedQty integer, FOREIGN KEY(location) REFERENCES warehouse(id))'
 db.execute(sql)
-sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, address text NOT NULL'
+sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL')
 db.execute(sql)
-sql = 'create table if not exists ' + 'orders' + ' (id integer PRIMARY KEY, price real, customer text)'
+sql = 'create table if not exists ' + 'orders' + ' (id integer PRIMARY KEY, price real, customer text NOT NULL, address text NOT NULL)'
 db.execute(sql)
 sql = 'create table if not exists ' + 'orderedComponents' + ' (id integer PRIMARY KEY, FOREIGN KEY(productId) REFERENCES component(id), name text NOT NULL, qty integer, FOREIGN KEY(orderId) REFERENCES orders(id))'
 db.execute(sql)
@@ -24,70 +24,143 @@ def connect(db):
         return None, e
     return connection, cursor
 
-'''insert user into database'''
-def insert_user(name, username, password):
+#crea magazzino
+def create_warehouse(name, address):
     try:
-        data  = """INSERT INTO users (name, amount, username, password) VALUES (?, ?, ?, ?);"""
-        data_tuple = (name, 100, username, password)
+        data  = """INSERT INTO warehouse (name, address) VALUES (?, ?);"""
+        data_tuple = (name, address)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        return(f"{username} created")
+        return(f"{name} created")
     except sqlite3.Error as e:
         return("Failed to create user: ", e)
 
-'''get user amount given user id'''
-def get_user_balance(user_id):
+#elimina magazzino
+def delete_warehouse(warehouseId):
     try:
-        amount = """SELECT amount FROM users WHERE id=?"""
-        connection, cursor = connect(path)        
-        fetch_amount = cursor.execute(amount, (user_id, ))
-        return fetch_amount.fetchone()
-    except sqlite3.Error as e:
-        return(f"cannot get user {user_id}")
-    
-'''get transaction given transaction id'''
-def get_user_by_username(username):
-    try:
-        user_query = """SELECT * FROM users WHERE username=?"""
+        data = """DELETE FROM warehouse WHERE id = ?"""
+        data_tuple = (warehouseId)
         connection, cursor = connect(path)
-        user_query_exec = cursor.execute(user_query, (username, ))
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry with id {entry_id} deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+#inserisci ordine in db
+def insert_order(price, customer, address):
+    try:
+        data  = """INSERT INTO orders (price, customer, address) VALUES (?, ?, ?);"""
+        data_tuple = (price, customer, address)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return(f"new order created")
+    except sqlite3.Error as e:
+        return("Failed to create user: ", e)
+
+
+#cancella ordine
+def cancel_order(orderid):
+    try:
+        data = """DELETE FROM orders WHERE id = ?"""
+        data_tuple = (orderId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry with id {entry_id} deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+
+#inserisci componenti gia ordinati
+def insert_ordered_component(productId, name, qty, orderId):
+    try:
+        data  = """INSERT INTO orderedComponents (productId, name, qty, orderId) VALUES (?, ?, ?, ?);"""
+        data_tuple = (productId, name, qty, orderId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return(f"{name} blocked")
+    except sqlite3.Error as e:
+        return("Failed to create user: ", e)
+
+
+#togli componenti da componenti ordinati
+def cancel_ordered_component(ordId):
+    try:
+        data = """DELETE FROM orderedComponents WHERE id = ?"""
+        data_tuple = (ordId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry with id {entry_id} deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+
+#inserisci nuovi elementi nel db
+def insert_component(productId, name, qty, bookedQty):
+    try:
+        data  = """INSERT INTO component (productId, name, qty, bookedQty) VALUES (?, ?, ?, ?);"""
+        data_tuple = (productId, name, qty, bookedQty)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return(f"{name} created")
+    except sqlite3.Error as e:
+        return("Failed to create user: ", e)
+
+
+#cancella elementi dal db
+def cancel_component(componentId):
+    try:
+        data = """DELETE FROM component WHERE id = ?"""
+        data_tuple = (componentId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry with id {entry_id} deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+
+def get_component(prodId):
+    try:
+        user_query = """SELECT * FROM component WHERE productId=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (prodId, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get transaction with id: {username}")
+        return(f"cannot get: {productId}")
 
-'''insert transaction into database'''
-def insert_tx(sender, receiver, amount):
+def get_warehouse(name):
     try:
-        tx = """INSERT INTO history (sender, receiver, amount) VALUES (?, ?, ?);"""
-        tx_data = (sender, receiver, amount)
+        user_query = """SELECT * FROM warehouse WHERE name=?"""
         connection, cursor = connect(path)
-        cursor.execute(tx, tx_data)
-        connection.commit()
-        tx_id = cursor.lastrowid
-        return tx_id
+        user_query_exec = cursor.execute(user_query, (name, ))
+        return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot insert transaction")
+        return(f"cannot get: {name}")
 
-'''get transaction given transaction id'''
-def get_tx(tx_id):
+def get_order(price, customer, address):
     try:
-        tx = """SELECT * FROM history WHERE tx_id=?"""
+        user_query = """SELECT * FROM orders WHERE customer=?"""
         connection, cursor = connect(path)
-        tx_exec = cursor.execute(tx, (tx_id, ))
-        return tx_exec.fetchone()
+        user_query_exec = cursor.execute(user_query, (price, customer, address, ))
+        return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get transaction with id: {tx_id}")
+        return(f"cannot get: {address}")
 
-'''update balance'''
-def update_user_balance(user_id, amount):
+def get_ordered_component(productId):
     try:
-        user_data = """UPDATE users SET amount = amount + ? WHERE id = ?"""
-        user_var = (amount, user_id)
+        user_query = """SELECT * FROM orderedComponents WHERE productId=?"""
         connection, cursor = connect(path)
-        cursor.execute(user_data, user_var)
-        connection.commit()
-        return("balance updated")
+        user_query_exec = cursor.execute(user_query, (productId, ))
+        return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot update user balance")
+        return(f"cannot get: {productId}")
+
+
 
