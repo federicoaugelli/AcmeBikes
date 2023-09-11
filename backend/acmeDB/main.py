@@ -21,7 +21,13 @@ def create_warehouse(body: create_warehouse):
     order = db.insert_order(body.price, body.customer, body.address)
     return(order)
 
-
+@app.get("/checkIsAssembleable/{component_id}")
+def checkIsAssembleable(component_id: str):
+    try:
+        component = db.get_component(component_id)
+        return component.assembleable
+    except Exception as e:
+        return("error")
 
 @app.post("/orderedcomponent", tags=["ordered Components"])
 def create_warehouse(body: create_warehouse):
