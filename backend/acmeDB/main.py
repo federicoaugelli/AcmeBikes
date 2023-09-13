@@ -24,10 +24,10 @@ def create_order(body: create_order):
     return(order)
 
 @app.get("/checkIsAssembleable/{component_id}")
-def checkIsAssembleable(component_id: str):
+def checkIsAssembleable(component_id: int):
     try:
         component = db.get_component(component_id)
-        return component.assembleable
+        return component[3]
     except Exception as e:
         return("error")
 

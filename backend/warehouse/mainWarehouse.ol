@@ -3,8 +3,8 @@ include "warehouseInterface.iol"
 include "http.iol"
 
 inputPort MainWarehouseService {
-	Location: "http://localhost:2000"
-	Protocol: http { format = "json" }
+	Location: "socket://localhost:8005"
+	Protocol: sodep
 	Interfaces: warehouseInterface
 }
 
@@ -21,7 +21,7 @@ outputPort AcmeBikeDatabase {
 define checkIsAssembleable {
     RequestResponse: getComponent( componentId )( response ) {
         httpRequest@HTTP( {
-            .url = "https://localhost:8004/checkIsAssembleable/?component_id=" + componentId,
+            .url = "http://localhost:8004/checkIsAssembleable/?component_id=" + componentId,
             .method = "GET"
         } )( componentId, response )
     }
