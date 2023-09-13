@@ -18,5 +18,7 @@ class create_ordered_component(BaseModel):
 class create_component(BaseModel):
     productId: int 
     name: str 
+    assembleable: bool
     qty: int 
     bookedQty: int
+    location: int

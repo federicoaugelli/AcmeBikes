@@ -3,13 +3,13 @@ import sqlite3
 path = "acmedb.db"
 database = sqlite3.connect(path)
 db = database.cursor()
-sql = 'create table if not exists ' + 'component' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, assembleable integer, qty integer, bookedQty integer, FOREIGN KEY(location) REFERENCES warehouse(id))'
-db.execute(sql)
 sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL)'
+db.execute(sql)
+sql = 'create table if not exists ' + 'component' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, assembleable integer, qty integer, bookedQty integer,  location integer NOT NULL, FOREIGN KEY(location) REFERENCES warehouse(id))'
 db.execute(sql)
 sql = 'create table if not exists ' + 'orders' + ' (id integer PRIMARY KEY, price real, customer text NOT NULL, address text NOT NULL)'
 db.execute(sql)
-sql = 'create table if not exists ' + 'orderedComponents' + ' (id integer PRIMARY KEY, FOREIGN KEY(productId) REFERENCES component(id), name text NOT NULL, qty integer, FOREIGN KEY(orderId) REFERENCES orders(id))'
+sql = 'create table if not exists ' + 'orderedComponents' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, qty integer, orderId integer NOT NULL, FOREIGN KEY(productId) REFERENCES component(id), FOREIGN KEY(orderId) REFERENCES orders(id))'
 db.execute(sql)
 database.commit()
 
@@ -101,16 +101,16 @@ def cancel_ordered_component(ordId):
 
 
 #inserisci nuovi elementi nel db
-def insert_component(productId, name, qty, bookedQty):
+def insert_component(productId, name, assembleable, qty, bookedQty, location):
     try:
-        data  = """INSERT INTO component (productId, name, qty, bookedQty) VALUES (?, ?, ?, ?);"""
-        data_tuple = (productId, name, qty, bookedQty)
+        data  = """INSERT INTO component (productId, name, assembleable, qty, bookedQty, location) VALUES (?, ?, ?, ?, ?, ?);"""
+        data_tuple = (productId, name, assembleable, qty, bookedQty, location)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
         return(f"{name} created")
     except sqlite3.Error as e:
-        return("Failed to create user: ", e)
+        return("Failed to create component: ", e)
 
 
 #cancella elementi dal db
