@@ -1,8 +1,21 @@
 import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
 from model import create_warehouse, create_order, create_ordered_component, create_component 
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    title='Database API',
+    summary='Database API documentation',
+    version="0.0.1",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():

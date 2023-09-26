@@ -14,6 +14,7 @@ bank = subprocess.Popen(["uvicorn", "main:app", "--reload"], cwd="../backend/ban
 courier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8001"], cwd="../backend/courier")
 geoloc = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8002"], cwd="../backend/geoloc")
 supplier = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8003"], cwd="../backend/supplier")
+database = subprocess.Popen(["uvicorn", "main:app", "--reload", "--port", "8004"], cwd="../backend/acmeDB")
 
 input("type enter to exit the program...")
 
@@ -27,4 +28,5 @@ os.killpg(os.getpgid(bank.pid), signal.SIGINT)
 os.killpg(os.getpgid(courier.pid), signal.SIGINT)
 os.killpg(os.getpgid(geoloc.pid), signal.SIGINT)
 os.killpg(os.getpgid(supplier.pid), signal.SIGINT)
+os.killpg(os.getpgid(database.pid), signal.SIGINT)
 

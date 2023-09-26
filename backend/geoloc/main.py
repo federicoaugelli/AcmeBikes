@@ -2,8 +2,21 @@ from fastapi import FastAPI, status, HTTPException, Depends, Body
 from model import geo_distance, user_address
 from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    title='Geoloc API',
+    summary='Geoloc API documentation',
+    version="0.0.1",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def hello():

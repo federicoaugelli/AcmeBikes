@@ -4,8 +4,21 @@ import auth.crypt_utils as crypt_utils
 from auth.auth_bearer import JWTBearer
 from auth.auth_handler import signJWT
 from model import payment_body, check_token_body, insert_user, user_login_schema
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    title='Bank API',
+    summary='Bank API documentation',
+    version="0.0.1",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/login", tags=["user"])
 def user_login(body: user_login_schema = Body(...)):
