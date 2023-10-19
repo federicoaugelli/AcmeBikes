@@ -36,7 +36,7 @@ def create_order(body: create_order):
     order = db.insert_order(body.price, body.customer, body.address)
     return(order)
 
-@app.get("/checkIsAssembleable/{component_id}")
+@app.get("/checkIsAssembleable")
 def checkIsAssembleable(component_id: int):
     try:
         component = db.get_component(component_id)

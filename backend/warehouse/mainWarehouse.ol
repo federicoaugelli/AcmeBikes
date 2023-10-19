@@ -8,23 +8,10 @@ inputPort MainWarehouseService {
 	Interfaces: warehouseInterface
 }
 
-interface AcmeBikeDatabaseInterface {
-    RequestResponse: getComponents(int)(bool)
-}
-
-outputPort AcmeBikeDatabase {
-    Location: "socket://localhost:8004/checkIsAssembleable/{component_id}"
+outputPort AcmeDbService {
+    Location: "socket://localhost:8004/"
     Protocol: http { .method = "get" }
-    Interfaces: AcmeBikeDatabaseInterface
-}
-
-define checkIsAssembleable {
-    RequestResponse: getComponent( componentId )( response ) {
-        httpRequest@HTTP( {
-            .url = "http://localhost:8004/checkIsAssembleable/?component_id=" + componentId,
-            .method = "GET"
-        } )( componentId, response )
-    }
+    Interfaces: AcmeDbInterface
 }
 
 cset {
@@ -35,15 +22,13 @@ execution{ concurrent }
 init {
 }
 
-	
-
 main{
 
     while(true){
     	[sendComponent(ComponentRequest)(response){
             foreach (component : ComponentRequest){
-				checkIsAssembleable@checkIsAssembleable
-    			getComponent( ComponentRequest.componentId )( response )
+				request.component_id = component.componentId
+                checkIsAssembleable@SumService(request)( response );
 				println@Console("Response:" + response)()
 			}
     	}]{
