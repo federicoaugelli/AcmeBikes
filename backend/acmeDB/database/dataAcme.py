@@ -6,7 +6,6 @@ db = database.cursor()
 sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL)'
 db.execute(sql)
 sql = 'create table if not exists ' + 'component' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, assembleable integer, qty integer, bookedQty integer,  location integer NOT NULL, FOREIGN KEY(location) REFERENCES warehouse(id))'
-sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL)'
 db.execute(sql)
 sql = 'create table if not exists ' + 'orders' + ' (id integer PRIMARY KEY, price real, customer text NOT NULL, address text NOT NULL)'
 db.execute(sql)
@@ -136,11 +135,11 @@ def get_component(prodId):
     except sqlite3.Error as e:
         return(f"cannot get: {productId}")
 
-def get_warehouse(name):
+def get_warehouse(warehouseId):
     try:
-        user_query = """SELECT * FROM warehouse WHERE name=?"""
+        user_query = """SELECT * FROM warehouse WHERE id=?"""
         connection, cursor = connect(path)
-        user_query_exec = cursor.execute(user_query, (name, ))
+        user_query_exec = cursor.execute(user_query, (warehouseId, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
         return(f"cannot get: {name}")
