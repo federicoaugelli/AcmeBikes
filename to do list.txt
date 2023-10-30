@@ -28,6 +28,9 @@ TASK COMPLETATI:
 	fornitore componenti
 
 TASK DA FARE O CONTINUARE:
+- controllare nel diagramma cosa bisogna fare se il pagamento dell'acconto viene rifiutato (stesso comportamento del pagamento finale?)
+- nel diagramma, nel pagamento finale, aggiungere freccia del messaggio di login successo 
+
 - Task 1 fare da 0
 
 - Task 3 comprende l'intero sistema di gestione, quindi sarà completato alla fine
