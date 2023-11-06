@@ -58,8 +58,31 @@ def insert_order(price, customer, address):
         connection.commit()
         return(f"new order created")
     except sqlite3.Error as e:
-        return("Failed to create user: ", e)
+        return("Failed to create order: ", e)
 
+
+def modify_order(order_id, price):
+    try:
+        data = """UPDATE orders SET price=price+? WHERE id=?"""
+        data_var = (price, order_id)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_var)
+        connection.commit()
+        return(f"order modified")
+    except sqlite3.Error as e:
+        return("Failed to modify order: ", e)
+
+
+def apply_discount(order_id, perc):
+    try:
+        data = """UPDATE orders SET price=price-(price*?/100) WHERE id=?"""
+        data_var = (perc, order_id)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_var)
+        connection.commit()
+        return(f"discount applied")
+    except sqlite3.Error as e:
+        return("Failed to apply discount: ", e)
 
 #cancella ordine
 def cancel_order(orderid):
@@ -69,7 +92,7 @@ def cancel_order(orderid):
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        print(f"Entry with id {entry_id} deleted successfully.")
+        print(f"Order {order_id} deleted successfully.")
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
 

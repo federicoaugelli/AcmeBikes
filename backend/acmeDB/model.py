@@ -9,6 +9,14 @@ class create_order(BaseModel):
     customer: str
     address: str
 
+class modify_order(BaseModel):
+    order_id: int
+    price: int
+
+class apply_discount(BaseModel):
+    order_id: int
+    perc: int
+
 class create_ordered_component(BaseModel):
     productId: int
     name: str

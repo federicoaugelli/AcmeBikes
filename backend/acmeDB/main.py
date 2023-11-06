@@ -1,6 +1,6 @@
 import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
-from model import create_warehouse, create_order, create_ordered_component, create_component 
+from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -32,6 +32,7 @@ def create_warehouse(body: create_warehouse):
     warehouse = db.create_warehouse(body.name, body.address)
     return(warehouse)
 
+#da fare
 @app.put("/warehouse", tags=["warehouse"])
 def modify_warehouse():
     return 0
@@ -53,13 +54,19 @@ def create_order(body: create_order):
     return(order)
 
 @app.put("/order", tags=["order"])
-def modify_order():
-    return 0
+def modify_order(body: modify_order):
+    order = db.modify_order(body.order_id, body.price)
+    return order
 
 @app.delete("/order", tags=["order"])
 def cancel_order(order_id: int):
     order = db.insert_order(order_id)
     return(order)
+
+@app.put("/order/discount", tags=["order"])
+def apply_discount(body: apply_discount):
+    order = db.apply_discount(body.order_id, body.perc)
+    return order
 
 
 #components
