@@ -28,8 +28,8 @@ TASK COMPLETATI:
 	fornitore componenti
 
 TASK DA FARE O CONTINUARE:
-- controllare nel diagramma cosa bisogna fare se il pagamento dell'acconto viene rifiutato (stesso comportamento del pagamento finale?)
-- nel diagramma, nel pagamento finale, aggiungere freccia del messaggio di login successo 
+- nel bpmn controllare all'inizio, quando ci viene inviato l'ordine se ci sono cicli, se ci sono bisogna controllare se devono essere customizzati,
+  se devono essere customizzati bisogna controllare la fattibilità. se sono solo accessori bisogna andare aventi.
 
 - Task 1 fare da 0
 
