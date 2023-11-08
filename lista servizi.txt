@@ -1,0 +1,35 @@
+sendOrdine          rivendita--->acmeBike --- le rinvendite inviano l'ordine a acmeBikes
+castNonFatt         acmeBike--->rivendita --- acmeBike dice alla rivendita che la customizzazione non è fattibile
+sendPreventivo      acmeBike--->rivendita --- acmeBike invia il preventivo alla rivendita
+accepetPreventivo   rivendita--->acmeBike --- la rivendita dice ad acmeBike che accetta il preventivo
+
+loginBanca          rivendita--->banca    --- rivendita fa login nella banca
+ConfLogin           banca--->rivendita    --- la banca conferma il login alla rivendita
+pay                 rivendita--->banca    --- rivendita invia il pagamento alla banca
+reciveToken         banca--->rivendita    --- la banca iniva il token alla rivendita
+
+reciveToken         rivendita--->acmeBike --- la rinvendita invia il token a acmeBikes
+
+loginBanca          acmeBike--->banca     --- acmeBike fa il login nella banca
+ConfLogin           banca--->acmeBike     --- la banca conferma il login a acmeBike
+validToken          acmeBike--->banca     --- acmeBike chiede se il token è valido alla banca
+ceckToken           banca--->acmeBike     --- la banca dice a acmeBike che il token non è valido
+getToken            acmeBike--->revindia  --- acmeBike dice alla rivendita che il token non è valido
+ceckToken           banca--->acmeBike     --- la banca dice a acmeBike che il token è valido
+ceckToken           acmeBike--->rivendita --- acmeBike dice alla rivendita che ha accettato l'acconto
+
+getListComp         acmeBike--->magPrin   --- acmeBike invia la lista dei componenti al magazziono principale
+getListComp         acmeBike--->magSec    --- acmeBike invia la lista dei componenti ai magazzini secondari
+getListComp         acmeBike--->Fornitore --- acmeBike invia la lista dei componenti al fornitore esterno
+
+getComponent        magPrin--->Corriere   --- corriere riceve i componenti dal magazziono principale
+getComponent        magPrin--->acmeBike   --- acmeBike riceve i componenti dal magazzino principale
+
+getComponent        magSec--->Corriere    --- corriere riceve i componenti dal magazziono secondario
+getComponent        magSec--->acmeBike    --- acmeBike riceve i componenti dal magazzino secondario
+
+getComponent        Fornitore--->acmeBike --- acmeBike riceve i componenti dal magazziono principale
+
+getComponent        Corrier--->rivendita  --- rivendita riceve i componenti dal corriere
+
+getComponent        acmeBike--->corriere  --- corriere riceve i cicli da acmeBike

@@ -81,7 +81,7 @@
     <bpmn2:messageFlow id="MessageFlow_0v87sfb" sourceRef="Participant_16zixk3" targetRef="Participant_0v0424n" messageRef="Message_12v07ky" />
     <bpmn2:messageFlow id="MessageFlow_1q7jcqb" sourceRef="Participant_16zixk3" targetRef="Participant_0w9oz3j" messageRef="Message_16ji0bx" />
     <bpmn2:messageFlow id="MessageFlow_1wgp98h" sourceRef="Participant_16zixk3" targetRef="Participant_0f51npo" messageRef="Message_0z2um7p" />
-    <bpmn2:messageFlow id="MessageFlow_021g1xo" sourceRef="Participant_16zixk3" targetRef="Participant_13wcysv" messageRef="Message_0ld2nfo" />
+    <bpmn2:messageFlow id="MessageFlow_021g1xo" sourceRef="Participant_16zixk3" targetRef="Participant_04d7n4q" messageRef="Message_0ld2nfo" />
     <bpmn2:messageFlow id="MessageFlow_1211u12" sourceRef="Participant_16zixk3" targetRef="Participant_04d7n4q" messageRef="Message_0q8h8y3" />
     <bpmn2:messageFlow id="MessageFlow_0ispcp5" sourceRef="Participant_13wcysv" targetRef="Participant_16zixk3" messageRef="Message_12ws5aq" />
     <bpmn2:messageFlow id="MessageFlow_0k15hdk" sourceRef="Participant_13wcysv" targetRef="Participant_16zixk3" messageRef="Message_08owelj" />
@@ -240,7 +240,7 @@
       <bpmn2:incoming>Flow_1r7j3er</bpmn2:incoming>
       <bpmn2:outgoing>Flow_0mmybjp</bpmn2:outgoing>
       <bpmn2:participantRef>Participant_16zixk3</bpmn2:participantRef>
-      <bpmn2:participantRef>Participant_13wcysv</bpmn2:participantRef>
+      <bpmn2:participantRef>Participant_04d7n4q</bpmn2:participantRef>
       <bpmn2:messageFlowRef>MessageFlow_021g1xo</bpmn2:messageFlowRef>
     </bpmn2:choreographyTask>
     <bpmn2:sequenceFlow id="Flow_1r7j3er" sourceRef="ChoreographyTask_0lnoc16" targetRef="ChoreographyTask_0ftq4iv" />
@@ -737,8 +737,8 @@
       <bpmndi:BPMNShape id="BPMNShape_13dgh80" bpmnElement="Participant_16zixk3" isMessageVisible="false" participantBandKind="top_initiating" choreographyActivityShape="ChoreographyTask_0ftq4iv_di">
         <dc:Bounds x="2920" y="-140" width="100" height="20" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1f66pub" bpmnElement="Participant_13wcysv" isMessageVisible="false" participantBandKind="bottom_non_initiating" choreographyActivityShape="ChoreographyTask_0ftq4iv_di">
-        <dc:Bounds x="2920" y="-80" width="100" height="20" />
+      <bpmndi:BPMNShape id="BPMNShape_1f66pub" bpmnElement="Participant_04d7n4q" isMessageVisible="false" participantBandKind="bottom_non_initiating" choreographyActivityShape="ChoreographyTask_0ftq4iv_di">
+        <dc:Bounds x="2920" y="-96" width="100" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1r7j3er_di" bpmnElement="Flow_1r7j3er">
         <di:waypoint x="2841" y="-100" />
