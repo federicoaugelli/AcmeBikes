@@ -1,6 +1,6 @@
 import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
-from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount
+from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -45,12 +45,16 @@ def delete_warehouse(warehouseId: int):
 
 #orders
 @app.get("/order", tags=["order"])
-def get_order():
-    return 0
+def get_order(order_id: int, customer: str):
+    try:
+        order = db.get_order(order_id, customer)
+        return order
+    except Exception as e:
+        return e
 
 @app.post("/order", tags=["order"])
 def create_order(body: create_order):
-    order = db.insert_order(body.price, body.customer, body.address)
+    order = db.insert_order(body.price, body.customer, body.address, body.shipment)
     return(order)
 
 @app.put("/order", tags=["order"])
@@ -60,13 +64,22 @@ def modify_order(body: modify_order):
 
 @app.delete("/order", tags=["order"])
 def cancel_order(order_id: int):
-    order = db.insert_order(order_id)
-    return(order)
+    try:
+        order = db.cancel_order(order_id)
+        return(order)
+    except Exception as e:
+        return e
 
 @app.put("/order/discount", tags=["order"])
 def apply_discount(body: apply_discount):
     order = db.apply_discount(body.order_id, body.perc)
     return order
+
+@app.put("/order/shipment", tags=["order"])
+def apply_discount(body: add_shipment):
+    order = db.add_shipment(body.order_id, body.shipment)
+    return order
+
 
 
 #components
@@ -78,14 +91,18 @@ def checkIsAssembleable(component_id: int):
     except Exception as e:
         return("error")
 
-@app.post("/orderedcomponent", tags=["components"])
+@app.post("/orderedcomponent", tags=["ordered components"])
 def create_ordered_component(body: create_ordered_component):
     order = db.insert_order(body.price, body.customer, body.address)
     return(order)
 
 @app.get("/component", tags=["components"])
-def get_components():
-    return (0)
+def get_components(prod_id: int):
+    try:
+        component = db.get_component(prod_id)
+        return(component)
+    except Exception as e:
+        return e
 
 @app.post("/component", tags=["components"])
 def create_component(body: create_component):
@@ -93,12 +110,20 @@ def create_component(body: create_component):
     return(component)
 
 @app.put("/component", tags=["components"])
-def modify_component():
-    return 0
+def modify_component(prod_id: int, qty: int):
+    try:
+        component = db.modify_component(prod_id, qty)
+        return(component)
+    except Exception as e:
+        return e
 
 @app.delete("/component", tags=["components"])
-def delete_component():
-    return (0)
+def delete_component(prod_id: int):
+    try:
+        component = db.cancel_component(prod_id)
+        return(component)
+    except Exception as e:
+        return e
 
 # @app.post("/pay")
 # def pay(body: payment_body, dependencies=Depends(JWTBearer())):
