@@ -21,7 +21,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-#warehouses
+'''WAREHOUSES'''
 @app.get("/warehouse", tags=["warehouse"])
 def get_warehouse(warehouseId: int):
     warehouse = db.get_warehouse(warehouseId)
@@ -43,7 +43,10 @@ def delete_warehouse(warehouseId: int):
     return warehouse
 
 
-#orders
+
+
+
+'''ORDER'''
 @app.get("/order", tags=["order"])
 def get_order(order_id: int, customer: str):
     try:
@@ -76,13 +79,13 @@ def apply_discount(body: apply_discount):
     return order
 
 @app.put("/order/shipment", tags=["order"])
-def apply_discount(body: add_shipment):
+def shipment(body: add_shipment):
     order = db.add_shipment(body.order_id, body.shipment)
     return order
 
 
 
-#components
+'''ASSEMBLABLE'''
 @app.get("/checkIsAssembleable", tags=["components"])
 def checkIsAssembleable(component_id: int):
     try:
@@ -91,11 +94,31 @@ def checkIsAssembleable(component_id: int):
     except Exception as e:
         return("error")
 
-@app.post("/orderedcomponent", tags=["ordered components"])
-def create_ordered_component(body: create_ordered_component):
-    order = db.insert_order(body.price, body.customer, body.address)
+
+
+
+'''ORDERED COMPONENT'''
+@app.get("/orderedcomponent", tags=["ordered components"])
+def get_ordered_component(orderId: int):
+    order = db.get_ordered_component(orderId)
     return(order)
 
+@app.post("/orderedcomponent", tags=["ordered components"])
+def create_ordered_component(body: create_ordered_component):
+    order = db.insert_ordered_component(body.productId, body.name, body.qty, body.orderId)
+    return(order)
+
+@app.delete("/orderedcomponent", tags=["ordered components"])
+def get_ordered_component(orderId: int):
+    order = db.cancel_ordered_component(orderId)
+    return(order)
+
+
+
+
+
+
+'''COMPONENTS'''
 @app.get("/component", tags=["components"])
 def get_components(prod_id: int):
     try:
@@ -125,29 +148,3 @@ def delete_component(prod_id: int):
     except Exception as e:
         return e
 
-# @app.post("/pay")
-# def pay(body: payment_body, dependencies=Depends(JWTBearer())):
-#     try:
-#         amount = body.amount
-#         sender_balance = db.get_user_balance(body.sender)
-#         if int(sender_balance[0]) <= amount:
-#             return None
-#         s = db.update_user_balance(body.sender, -amount)
-#         r = db.update_user_balance(body.receiver, amount)
-#         tx = db.insert_tx(body.sender, body.receiver, amount)
-#         return tx
-#     except:
-#         return("error")
-
-# @app.post("/checktoken")
-# def check_token(body: check_token_body):
-#     try:
-#         amount = body.amount
-#         tx_id = body.tx_id
-#         tx = db.get_tx(tx_id)
-#         if int(tx[3]) == amount:
-#             return True
-#         else:
-#             return False
-#     except:
-#         return("error")

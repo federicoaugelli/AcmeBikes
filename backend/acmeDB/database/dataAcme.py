@@ -136,23 +136,23 @@ def insert_ordered_component(productId, name, qty, orderId):
     except sqlite3.Error as e:
         return("Failed to create user: ", e)
 
-def get_ordered_component(productId):
+def get_ordered_component(orderId):
     try:
-        user_query = """SELECT * FROM orderedComponents WHERE productId=?"""
+        user_query = """SELECT * FROM orderedComponents WHERE orderId=?"""
         connection, cursor = connect(path)
-        user_query_exec = cursor.execute(user_query, (productId, ))
+        user_query_exec = cursor.execute(user_query, (orderId, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get: {productId}")
+        return(f"cannot get: {orderId}")
 
 def cancel_ordered_component(ordId):
     try:
-        data = """DELETE FROM orderedComponents WHERE id = ?"""
+        data = """DELETE FROM orderedComponents WHERE orderId = ?"""
         data_tuple = (ordId)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        print(f"Entry with id {entry_id} deleted successfully.")
+        print(f"Entry with id {ordId} deleted successfully.")
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
 
