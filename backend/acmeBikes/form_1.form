@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "approved?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_13q3t7m",
+        "columns": null
+      },
+      "id": "Field_0imgv2s",
+      "key": "approved"
+    }
+  ],
+  "type": "default",
+  "id": "form_test",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.11.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.19.0",
+  "schemaVersion": 8
+}
