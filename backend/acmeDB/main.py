@@ -21,6 +21,9 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
+
+
+
 '''WAREHOUSES'''
 @app.get("/warehouse", tags=["warehouse"])
 def get_warehouse(warehouseId: int):
