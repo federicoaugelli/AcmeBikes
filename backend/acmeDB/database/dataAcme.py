@@ -5,11 +5,44 @@ database = sqlite3.connect(path)
 db = database.cursor()
 sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL)'
 db.execute(sql)
-sql = 'create table if not exists ' + 'component' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, assembleable integer, qty integer, location integer NOT NULL, FOREIGN KEY(location) REFERENCES warehouse(id))'
+sql = 'create table if not exists ' + 'component' + """ (id integer PRIMARY KEY, 
+                                                       productId integer NOT NULL,
+                                                       name text NOT NULL,
+                                                       assembleable integer,
+                                                       qty integer,
+                                                       type text,
+                                                       location integer NOT NULL,
+                                                       FOREIGN KEY(location) REFERENCES warehouse(id)) """
 db.execute(sql)
-sql = 'create table if not exists ' + 'orders' + ' (id integer PRIMARY KEY, price real, customer text NOT NULL, address text NOT NULL, shipment real)'
+sql = 'create table if not exists ' + 'bikes' + """ (id integer PRIMARY KEY, 
+                                                  productId integer NOT NULL,
+                                                  name text NOT NULL,
+                                                  qty integer,
+                                                  color text NOT NULL,
+                                                  location integer NOT NULL,
+                                                  FOREIGN KEY(location) REFERENCES warehouse(id)) """
 db.execute(sql)
-sql = 'create table if not exists ' + 'orderedComponents' + ' (id integer PRIMARY KEY, productId integer NOT NULL, name text NOT NULL, qty integer, orderId integer NOT NULL, FOREIGN KEY(productId) REFERENCES component(id), FOREIGN KEY(orderId) REFERENCES orders(id))'
+sql = 'create table if not exists ' + 'customisation'+ """ (id integer PRIMARY KEY,
+                                                      bike_id integer NOT NULL,
+                                                      component_id integer NOT NULL,
+                                                      FOREIGN KEY(bike_id) REFERENCES bikes(id),
+                                                      FOREIGN KEY(component_id) REFERENCES component(id)) """
+db.execute(sql)
+sql = 'create table if not exists ' + 'orders' + """ (id integer PRIMARY KEY,
+                                                    price real,
+                                                    customer text NOT NULL, 
+                                                    address text NOT NULL, 
+                                                    shipment real) """
+db.execute(sql)
+sql = 'create table if not exists ' + 'orderedComponents' + """ (id integer PRIMARY KEY, 
+                                                               component_id integer NULL,
+                                                               bike_id integer NULL,
+                                                               name text NOT NULL,
+                                                               qty integer,
+                                                               orderId integer NOT NULL,
+                                                               FOREIGN KEY(bike_id) REFERENCES bike(id),
+                                                               FOREIGN KEY(component_id) REFERENCES component(id),
+                                                               FOREIGN KEY(orderId) REFERENCES orders(id)) """
 db.execute(sql)
 database.commit()
 
