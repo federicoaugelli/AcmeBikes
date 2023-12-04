@@ -6,7 +6,6 @@ from threading import Thread
 import pycamunda.externaltask
 import pycamunda.variable
 
-
 class ExternalTaskException(Exception):
     def __init__(
             self, *args, message: str, details: str = '', retry_timeout: int = 10000, **kwargs
@@ -39,7 +38,7 @@ class Worker:
         :param max_tasks: Numero massimo di task per fetch.
         :param async_response_timeout: Attesa prima del fetch successivo.
         """
-        print("Starting up the ACMEat Camunda External Worker...")
+        print("Starting up the ACMEBike Camunda External Worker...")
         self.fetch_and_lock = pycamunda.externaltask.FetchAndLock(
             url, worker_id, max_tasks, async_response_timeout=async_response_timeout
         )

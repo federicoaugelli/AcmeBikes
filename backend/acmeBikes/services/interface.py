@@ -1,7 +1,8 @@
 from worker import Worker
 from verify_customisation import verify_customisation
-from cancel_order import cancel_order
+from notify_client import cancel_order
 from verify_availability import verify_availability
+from create_order import create_order
 def test_function():
     print('ciao')
     return {}
@@ -22,15 +23,19 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='verify_customisation',
         func=verify_customisation,
-        variables=['customisation_accepted'])
+        variables=[])
 
     worker.subscribe(
-        topic='cancel_order',
+        topic='notify_client',
         func=cancel_order,
         variables=['message'])
     
     worker.subscribe(
         topic='verify_availability',
         func=verify_availability,
-        variables=['preventivo'])
+        variables=[])
+    worker.subscribe(
+        topic='create_order',
+        func=create_order,
+        variables=[])
     worker.run()
