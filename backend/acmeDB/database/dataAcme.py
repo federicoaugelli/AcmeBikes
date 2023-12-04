@@ -158,10 +158,10 @@ def apply_discount(order_id, perc):
 
 
 #ordered components
-def insert_ordered_component(productId, name, qty, orderId):
+def insert_ordered_component(componentId, bikeId, name, qty, orderId):
     try:
-        data  = """INSERT INTO orderedComponents (productId, name, qty, orderId) VALUES (?, ?, ?, ?);"""
-        data_tuple = (productId, name, qty, orderId)
+        data  = """INSERT INTO orderedComponents (componentId, bikeId, name, qty, orderId) VALUES (?, ?, ?, ?);"""
+        data_tuple = (componentId, bikeId, name, qty, orderId)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
@@ -191,10 +191,10 @@ def cancel_ordered_component(ordId):
 
 
 #components
-def insert_component(productId, name, assembleable, qty, bookedQty, location):
+def insert_component(productId, name, assembleable, qty, ty, bookedQty, location):
     try:
-        data  = """INSERT INTO component (productId, name, assembleable, qty, location) VALUES (?, ?, ?, ?, ?, ?);"""
-        data_tuple = (productId, name, assembleable, qty, bookedQty, location)
+        data  = """INSERT INTO component (productId, name, assembleable, qty, type, location) VALUES (?, ?, ?, ?, ?, ?, ?);"""
+        data_tuple = (productId, name, assembleable, qty, ty, bookedQty, location)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
@@ -237,8 +237,85 @@ def modify_component(prod_id, qty):
         return("Failed to update quantity: ", e)
         
 
+#bikes
+def insert_bike(productId, name, qty, color, location):
+    try:
+        data  = """INSERT INTO bikes (productId, name, qty, color, location) VALUES (?, ?, ?, ?, ?);"""
+        data_tuple = (productId, name, qty, color, location)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return(f"{name} created")
+    except sqlite3.Error as e:
+        return("Failed to create component: ", e)
+
+def cancel_bike(componentId):
+    try:
+        data = """DELETE FROM bikes WHERE id = ?"""
+        data_tuple = (componentId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+def get_bike(prodId):
+    try:
+        user_query = """SELECT * FROM bikes WHERE productId=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (prodId, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get}")
+
+def modify_bike(prod_id, qty):
+    try:
+        data = """UPDATE bikes SET qty=qty+? WHERE id=?"""
+        data_var = (qty, prod_id)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_var)
+        connection.commit()
+        if qty>0:
+            return(f"added {qty} components")
+        else:
+            return(f"deleted {qty} components")
+    except sqlite3.Error as e:
+        return("Failed to update quantity: ", e)
 
 
+
+#customisations
+def insert_cust(bikeId, componentId):
+    try:
+        data  = """INSERT INTO customisation (bikeId, componentId) VALUES (?, ?);"""
+        data_tuple = (bikeId, componentId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return(f"customisation created")
+    except sqlite3.Error as e:
+        return("Failed to create component: ", e)
+        
+def cancel_cust(bikeId, componentId):
+    try:
+        data = """DELETE FROM customisation WHERE bikeId = ? AND componentId = ?"""
+        data_tuple = (bikeId, componentId)
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        print(f"Entry with id deleted successfully.")
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+
+def get_cust(bikeId, componentId):
+    try:
+        user_query ="""SELECT * FROM customisation WHERE bikeId = ? AND componentID = ?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (bikeId, componentId, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get}")
 
 
 

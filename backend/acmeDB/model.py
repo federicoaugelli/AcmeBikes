@@ -23,7 +23,8 @@ class add_shipment(BaseModel):
     shipment: int
 
 class create_ordered_component(BaseModel):
-    productId: int
+    componentId: int
+    bikeId: int
     name: str
     qty: int 
     orderId: int
@@ -32,5 +33,18 @@ class create_component(BaseModel):
     productId: int 
     name: str 
     assembleable: bool
-    qty: int 
+    qty: int
+    ty: str
+    bookedQty: int
     location: int
+
+class create_bike(BaseModel):
+    productId: int
+    name: str
+    qty: int
+    color: str
+    location: int
+
+class create_customisation(BaseModel):
+    bikeId: int
+    componentId: int
