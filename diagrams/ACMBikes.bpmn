@@ -274,13 +274,8 @@
     <bpmn:subProcess id="Activity_0k6q8ne" name="verifica disponibilità">
       <bpmn:incoming>Flow_0xa3a71</bpmn:incoming>
       <bpmn:outgoing>Flow_1dyi476</bpmn:outgoing>
-      <bpmn:task id="Activity_00o9zah" name="Preventivo finale">
-        <bpmn:incoming>Flow_077kjbq</bpmn:incoming>
-        <bpmn:outgoing>Flow_1n8ve48</bpmn:outgoing>
-      </bpmn:task>
-      <bpmn:sequenceFlow id="Flow_1n8ve48" sourceRef="Activity_00o9zah" targetRef="Event_1hnbce3" />
       <bpmn:intermediateThrowEvent id="Event_1hnbce3" name="Invia preventivo">
-        <bpmn:incoming>Flow_1n8ve48</bpmn:incoming>
+        <bpmn:incoming>Flow_077kjbq</bpmn:incoming>
         <bpmn:messageEventDefinition id="MessageEventDefinition_0le6dle" />
       </bpmn:intermediateThrowEvent>
       <bpmn:subProcess id="Activity_1ja546a">
@@ -327,7 +322,7 @@
         <bpmn:outgoing>Flow_0gecj8f</bpmn:outgoing>
       </bpmn:task>
       <bpmn:sequenceFlow id="Flow_0gecj8f" sourceRef="Activity_17hsmy5" targetRef="Gateway_0neyilu" />
-      <bpmn:sequenceFlow id="Flow_077kjbq" sourceRef="Gateway_0orserl" targetRef="Activity_00o9zah" />
+      <bpmn:sequenceFlow id="Flow_077kjbq" sourceRef="Gateway_0orserl" targetRef="Event_1hnbce3" />
       <bpmn:textAnnotation id="TextAnnotation_0ivkokn">
         <bpmn:text>scorpora ordini nel caso non devono essere asseblati</bpmn:text>
       </bpmn:textAnnotation>
@@ -1147,10 +1142,6 @@
         <dc:Bounds x="860" y="1630" width="1180" height="500" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00o9zah_di" bpmnElement="Activity_00o9zah">
-        <dc:Bounds x="1880" y="1940" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_16tmkbf_di" bpmnElement="Event_1hnbce3">
         <dc:Bounds x="1912" y="2052" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -1208,10 +1199,6 @@
         <dc:Bounds x="1630" y="1690" width="99.99596600688469" height="69.70740103270224" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1n8ve48_di" bpmnElement="Flow_1n8ve48">
-        <di:waypoint x="1930" y="2020" />
-        <di:waypoint x="1930" y="2052" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qsy39e_di" bpmnElement="Flow_1qsy39e">
         <di:waypoint x="1590" y="1880" />
         <di:waypoint x="1610" y="1880" />
@@ -1239,7 +1226,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_077kjbq_di" bpmnElement="Flow_077kjbq">
         <di:waypoint x="1930" y="1905" />
-        <di:waypoint x="1930" y="1940" />
+        <di:waypoint x="1930" y="2052" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1hix62r_di" bpmnElement="Association_1hix62r">
         <di:waypoint x="1665" y="1840" />
