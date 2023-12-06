@@ -7,7 +7,6 @@ def test_function():
     print('ciao')
     return {}
 
-
 if __name__ == '__main__':
     print("ACMEManager Camunda Server started.")
     url = 'http://localhost:8080/engine-rest'
@@ -17,25 +16,25 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='test_external_task',
         func=test_function,
-        variables=[]
+        variables=["process_instance_id", "process_dict"]
     )
 
     worker.subscribe(
         topic='verify_customisation',
         func=verify_customisation,
-        variables=[])
+        variables=["process_instance_id", "process_dict"])
 
     worker.subscribe(
         topic='notify_client',
         func=cancel_order,
-        variables=['message'])
+        variables=["process_instance_id", "process_dict", 'message'])
     
     worker.subscribe(
         topic='verify_availability',
         func=verify_availability,
-        variables=[])
+        variables=["process_instance_id", "process_dict"])
     worker.subscribe(
         topic='create_order',
         func=create_order,
-        variables=[])
+        variables=["process_instance_id", "process_dict"])
     worker.run()

@@ -60,6 +60,7 @@ class Worker:
         self.topic_funcs = {}
         self.max_tasks = max_tasks
         self.async_response_timeout = async_response_timeout
+        self.process_dict = {}
 
     def subscribe(
             self,
@@ -142,7 +143,7 @@ def work(worker, tasks):
     )
     for task in tasks:
         try:
-            return_variables = worker.topic_funcs[task.topic_name](**task.variables)
+            return_variables = worker.topic_funcs[task.topic_name](task.process_instance_id, worker.process_dict, **task.variables)
         except ExternalTaskException as exc:
             handle_failure.id_ = task.id_
             handle_failure.error_message = exc.message
