@@ -1,6 +1,6 @@
 import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
-from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment
+from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment, create_bike, create_customisation
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -88,18 +88,6 @@ def shipment(body: add_shipment):
 
 
 
-'''ASSEMBLABLE'''
-@app.get("/checkIsAssembleable", tags=["components"])
-def checkIsAssembleable(component_id: int):
-    try:
-        component = db.get_component(component_id)
-        return component[3]
-    except Exception as e:
-        return("error")
-
-
-
-
 '''ORDERED COMPONENT'''
 @app.get("/orderedcomponent", tags=["ordered components"])
 def get_ordered_component(orderId: int):
@@ -108,7 +96,7 @@ def get_ordered_component(orderId: int):
 
 @app.post("/orderedcomponent", tags=["ordered components"])
 def create_ordered_component(body: create_ordered_component):
-    order = db.insert_ordered_component(body.productId, body.name, body.qty, body.orderId)
+    order = db.insert_ordered_component(body.componentId, body.bikeId, body.name, body.qty, body.orderId)
     return(order)
 
 @app.delete("/orderedcomponent", tags=["ordered components"])
@@ -132,7 +120,7 @@ def get_components(prod_id: int):
 
 @app.post("/component", tags=["components"])
 def create_component(body: create_component):
-    component = db.insert_component(body.productId, body.name, body.assembleable, body.qty, body.bookedQty, body.location)
+    component = db.insert_component(body.productId, body.name, body.assembleable, body.qty, body.ty, body.bookedQty, body.location)
     return(component)
 
 @app.put("/component", tags=["components"])
@@ -151,3 +139,64 @@ def delete_component(prod_id: int):
     except Exception as e:
         return e
 
+
+'''BIKES'''
+
+@app.get("/bike", tags=["bikes"])
+def get_bikes(bike_id: int):
+    try:
+        bike = db.get_bike(bike_id)
+        return bike
+    except Exception as e:
+        return e
+
+@app.post("/bike", tags=["bikes"])
+def create_bike(body: create_bike):
+    try:
+        bike = db.insert_bike(body.productId, body.name, body.qty, body.color, body.location)
+        return bike
+    except Exception as e:
+        return e
+
+@app.put("/bike", tags=["bikes"])
+def modify_bike(bike_id: int, qty: int):
+    try:
+        bike = db.modify_bike(bike_id, qty)
+        return bike
+    except Exception as e:
+        return e
+
+@app.delete("/bike", tags=["bikes"])
+def cancel_bike(bike_id: int):
+    try:
+        bike = db.cancel_bike(bike_id)
+        return bike
+    except Exception as e:
+        return e
+
+
+'''Customisations'''
+
+@app.get("/custom", tags=["customisation"])
+def get_customisation(bike_id: int, component_id: int):
+    try:
+        cust = db.get_cust(bike_id, component_id)
+        return cust
+    except Exception as e:
+        return e
+
+@app.post("/custom", tags=["customisation"])
+def create_customisation(body: create_customisation):
+    try:
+        cust = db.insert_cust(body.bikeId, body.componentId)
+        return cust
+    except Exception as e:
+        return e
+
+@app.delete("/custom", tags=["customisation"])
+def cancel_customisation(bike_id: int, component_id: int):
+    try:
+        cust = db.cancel_cust(bike_id, component_id)
+        return cust
+    except Exception as e:
+        return e

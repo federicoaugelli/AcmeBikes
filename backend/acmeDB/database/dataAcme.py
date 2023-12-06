@@ -35,8 +35,8 @@ sql = 'create table if not exists ' + 'orders' + """ (id integer PRIMARY KEY,
                                                     shipment real) """
 db.execute(sql)
 sql = 'create table if not exists ' + 'orderedComponents' + """ (id integer PRIMARY KEY, 
-                                                               component_id integer NULL,
-                                                               bike_id integer NULL,
+                                                               component_id integer,
+                                                               bike_id integer,
                                                                name text NOT NULL,
                                                                qty integer,
                                                                orderId integer NOT NULL,
@@ -81,11 +81,11 @@ def create_warehouse(name, address):
 def delete_warehouse(warehouseId):
     try:
         data = """DELETE FROM warehouse WHERE id = ?"""
-        data_tuple = (warehouseId)
+        data_tuple = (warehouseId, )
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        return(f"Entry with id {entry_id} deleted successfully.")
+        return(f"deleted successfully.")
     except sqlite3.Error as e:
         return(f"An error occurred: {e}")
 
@@ -160,8 +160,8 @@ def apply_discount(order_id, perc):
 #ordered components
 def insert_ordered_component(componentId, bikeId, name, qty, orderId):
     try:
-        data  = """INSERT INTO orderedComponents (componentId, bikeId, name, qty, orderId) VALUES (?, ?, ?, ?);"""
-        data_tuple = (componentId, bikeId, name, qty, orderId)
+        data  = """INSERT INTO orderedComponents (component_id, bike_id, name, qty, orderId) VALUES (?, ?, ?, ?, ?);"""
+        data_tuple = (componentId, bikeId, name, qty, orderId, )
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
@@ -267,7 +267,7 @@ def get_bike(prodId):
         user_query_exec = cursor.execute(user_query, (prodId, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get}")
+        return(f"cannot get")
 
 def modify_bike(prod_id, qty):
     try:
@@ -315,7 +315,7 @@ def get_cust(bikeId, componentId):
         user_query_exec = cursor.execute(user_query, (bikeId, componentId, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get}")
+        return(f"cannot get")
 
 
 
