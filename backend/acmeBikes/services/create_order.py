@@ -1,4 +1,3 @@
-import requests
 import pycamunda
 import pycamunda.processdef
 from pycamunda.message import CorrelateSingle
@@ -10,8 +9,6 @@ def create_order(process_instance_id, process_dict):
     load_dotenv()
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
     ACMEBIKE_KEY = os.getenv("ACMEBIKE_KEY")
-    print(CAMUNDA_URL)
-    # response = requests.get(url, json=order)
     print(f"create_order {process_instance_id}")
     try:
         start_instance = pycamunda.processdef.StartInstance(url=CAMUNDA_URL, key=ACMEBIKE_KEY)
@@ -25,4 +22,4 @@ def create_order(process_instance_id, process_dict):
     except Exception as e:
         print(e)
         pass
-    return {"preventivo": 100}
+    return {"order_created": True}

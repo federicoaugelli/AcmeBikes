@@ -24,7 +24,7 @@
     <bpmn:intermediateCatchEvent id="Event_0b5b3te" name="Order accepted (con preventivo)">
       <bpmn:incoming>Flow_0omu0ou</bpmn:incoming>
       <bpmn:outgoing>Flow_0700yow</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_20qo6rc" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_0plju76" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te" />
     <bpmn:endEvent id="Event_1yqsgmt">
@@ -43,6 +43,7 @@
   <bpmn:message id="Message_2u3rq66" name="Message_2u3rq66" />
   <bpmn:message id="Message_191kk0r" name="Message_191kk0r" />
   <bpmn:message id="Message_3uqto41" name="Message_3uqto41" />
+  <bpmn:message id="Message_0plju76" name="cancel_order" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Resale_Process">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">

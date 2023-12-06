@@ -27,7 +27,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='notify_client',
         func=cancel_order,
-        variables=["process_instance_id", "process_dict", 'message'])
+        variables=["process_instance_id", "process_dict"])
     
     worker.subscribe(
         topic='verify_availability',
