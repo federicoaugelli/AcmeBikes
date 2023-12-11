@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 import os
 
 def cancel_order(process_instance_id, process_dict):
-    """ chiamata AcmeDB per eliminare ordine dal DB """
+    # in questo caso non bisogna fare nulla con il db perchè non abbiamo ancora marcato i pezzi, 
+    # ma abbiamo controllato solo la fattibilità della customizzazione
+    #devo solo dire alla rivendita che la customizzazione non è fattibile
     # TODO: richiesta al db per cancellare ordine e finire
     # response = requests.get(url, params=order_id)
     load_dotenv()
