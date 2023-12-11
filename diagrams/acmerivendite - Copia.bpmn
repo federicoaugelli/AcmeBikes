@@ -14,7 +14,7 @@
     <bpmn:intermediateCatchEvent id="Event_0pxil3v" name="Order not accepted">
       <bpmn:incoming>Flow_1k10wt2</bpmn:incoming>
       <bpmn:outgoing>Flow_07k7jh2</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1hc0afx" messageRef="Message_0bkb3q7" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1hc0afx" messageRef="Message_0plju76" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1k10wt2" sourceRef="Gateway_0fy346l" targetRef="Event_0pxil3v" />
     <bpmn:endEvent id="Event_0tediyv">
@@ -24,7 +24,7 @@
     <bpmn:intermediateCatchEvent id="Event_0b5b3te" name="Order accepted (con preventivo)">
       <bpmn:incoming>Flow_0omu0ou</bpmn:incoming>
       <bpmn:outgoing>Flow_0700yow</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_0plju76" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_26loub3" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te" />
     <bpmn:endEvent id="Event_1yqsgmt">
@@ -44,6 +44,7 @@
   <bpmn:message id="Message_191kk0r" name="Message_191kk0r" />
   <bpmn:message id="Message_3uqto41" name="Message_3uqto41" />
   <bpmn:message id="Message_0plju76" name="cancel_order" />
+  <bpmn:message id="Message_26loub3" name="order_accepted" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Resale_Process">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -67,11 +68,11 @@
           <dc:Bounds x="450" y="305" width="80" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ox7d1p_di" bpmnElement="create_order">
-        <dc:Bounds x="250" y="137" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1yqsgmt_di" bpmnElement="Event_1yqsgmt">
         <dc:Bounds x="672" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ox7d1p_di" bpmnElement="create_order">
+        <dc:Bounds x="250" y="137" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0decigl_di" bpmnElement="Flow_0decigl">
         <di:waypoint x="195" y="177" />
