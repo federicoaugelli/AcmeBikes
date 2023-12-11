@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "Do you accept the quote?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1p245c1",
+        "columns": null
+      },
+      "id": "Field_0ppxmmu",
+      "key": "accept_quote"
+    }
+  ],
+  "type": "default",
+  "id": "accept_quote",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.17.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 12
+}
