@@ -3,6 +3,7 @@ from verify_customisation import verify_customisation
 from notify_client import cancel_order
 from verify_availability import verify_availability
 from create_order import create_order
+from send_quote import send_quote
 def test_function():
     print('ciao')
     return {}
@@ -37,4 +38,8 @@ if __name__ == '__main__':
         topic='create_order',
         func=create_order,
         variables=["process_instance_id", "process_dict"])
+    worker.subscribe(
+        topic='send_quote',
+        func=send_quote,
+        variables=["process_instance_id", "process_dict", "discount"])
     worker.run()

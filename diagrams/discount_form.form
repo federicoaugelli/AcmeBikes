@@ -1,0 +1,48 @@
+{
+  "components": [
+    {
+      "label": "Total",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0j2x2ug",
+        "columns": null
+      },
+      "id": "Field_0vi7zq0",
+      "key": "preventivo",
+      "defaultValue": "0"
+    },
+    {
+      "label": "Discount",
+      "type": "number",
+      "layout": {
+        "row": "Row_0c9s0ry",
+        "columns": null
+      },
+      "id": "Field_0si4874",
+      "key": "discount",
+      "defaultValue": 0,
+      "decimalDigits": 0,
+      "increment": "1"
+    },
+    {
+      "action": "submit",
+      "label": "Apply Discount",
+      "type": "button",
+      "layout": {
+        "row": "Row_0pzv713",
+        "columns": null
+      },
+      "id": "Field_1tizirj",
+      "properties": {}
+    }
+  ],
+  "type": "default",
+  "id": "Discount_Form",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.17.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 12
+}

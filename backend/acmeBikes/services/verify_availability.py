@@ -8,4 +8,4 @@ def verify_availability(process_instance_id, process_dict):
     # e successivamente si marca il componente come assegnato
     # response = requests.get(url, json=order)
     print("availability")
-    return {"preventivo": 100}
+    return {"preventivo": 1100}
