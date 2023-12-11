@@ -6,6 +6,8 @@ import os
 
 def create_order(process_instance_id, process_dict):
     """ chiamata rivendite per creare l'ordine """
+    #per creare l'ordine bisogna mandere ad acme bike l'elenco dei cicli con eventuali castomizzazioni
+    #l'elenco ci viene formito dal frontend
     load_dotenv()
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
     ACMEBIKE_KEY = os.getenv("ACMEBIKE_KEY")
