@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "label": "Are all components arrived?",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1vb19ck",
+        "columns": null
+      },
+      "id": "Field_0by7psn",
+      "key": "check_components"
+    }
+  ],
+  "type": "default",
+  "id": "check_components",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.17.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.20.0",
+  "schemaVersion": 12
+}

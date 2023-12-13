@@ -94,7 +94,7 @@
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_01pnelf" sourceRef="Event_0vcnfjf" targetRef="Activity_1otm5x7" />
     <bpmn:sequenceFlow id="Flow_11a0l0n" sourceRef="Activity_1otm5x7" targetRef="Gateway_070vy7n" />
-    <bpmn:userTask id="Activity_1otm5x7" name="Check components">
+    <bpmn:userTask id="Activity_1otm5x7" name="Check components" camunda:formRef="check_components" camunda:formRefBinding="latest">
       <bpmn:incoming>Flow_01pnelf</bpmn:incoming>
       <bpmn:outgoing>Flow_11a0l0n</bpmn:outgoing>
     </bpmn:userTask>
@@ -103,8 +103,12 @@
       <bpmn:outgoing>Flow_0kho861</bpmn:outgoing>
       <bpmn:outgoing>Flow_1ed8bom</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0kho861" name="Yes" sourceRef="Gateway_070vy7n" targetRef="Activity_1nlj7hr" />
-    <bpmn:sequenceFlow id="Flow_1ed8bom" name="No" sourceRef="Gateway_070vy7n" targetRef="Event_0vcnfjf" />
+    <bpmn:sequenceFlow id="Flow_0kho861" name="Yes" sourceRef="Gateway_070vy7n" targetRef="Activity_1nlj7hr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${check_components}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ed8bom" name="No" sourceRef="Gateway_070vy7n" targetRef="Event_0vcnfjf">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!check_components}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_03fjyfm" sourceRef="Activity_1nlj7hr" targetRef="Gateway_0r0sh95" />
     <bpmn:eventBasedGateway id="Gateway_0r0sh95" name="Payment accepted">
       <bpmn:incoming>Flow_03fjyfm</bpmn:incoming>
