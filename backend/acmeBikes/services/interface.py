@@ -11,6 +11,8 @@ from verify_prepayment import verify_prepayment
 from token_accepted import token_accepted
 from token_refused import token_refused
 from create_list import create_list
+from send_bicycle import send_bicycle
+from payment import payment
 
 def test_function():
     print('ciao')
@@ -77,6 +79,14 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='create_list',
         func=create_list,
+        variables=["process_instance_id", "process_dict"])
+    worker.subscribe(
+        topic='send_bicycle',
+        func=send_bicycle,
+        variables=["process_instance_id", "process_dict"])
+    worker.subscribe(
+        topic='payment',
+        func=payment,
         variables=["process_instance_id", "process_dict"])
     
     worker.run()
