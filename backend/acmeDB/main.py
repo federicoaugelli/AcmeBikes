@@ -120,8 +120,11 @@ def get_components(prod_id: int):
 
 @app.post("/component", tags=["components"])
 def create_component(body: create_component):
-    component = db.insert_component(body.productId, body.name, body.assembleable, body.qty, body.ty, body.bookedQty, body.location)
-    return(component)
+    try:
+        component = db.insert_component(body.productId, body.name, body.price, body.assembleable, body.qty, body.ty, body.location)
+        return(component)
+    except Exception as e:  
+        return e
 
 @app.put("/component", tags=["components"])
 def modify_component(prod_id: int, qty: int):
@@ -153,7 +156,7 @@ def get_bikes(bike_id: int):
 @app.post("/bike", tags=["bikes"])
 def create_bike(body: create_bike):
     try:
-        bike = db.insert_bike(body.productId, body.name, body.qty, body.color, body.location)
+        bike = db.insert_bike(body.productId, body.name, body.price, body.qty, body.color, body.location)
         return bike
     except Exception as e:
         return e

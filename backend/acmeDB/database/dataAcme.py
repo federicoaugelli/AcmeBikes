@@ -8,6 +8,7 @@ db.execute(sql)
 sql = 'create table if not exists ' + 'component' + """ (id integer PRIMARY KEY, 
                                                        productId integer NOT NULL,
                                                        name text NOT NULL,
+                                                       price integer NOT NULL,
                                                        assembleable integer,
                                                        qty integer,
                                                        type text,
@@ -17,6 +18,7 @@ db.execute(sql)
 sql = 'create table if not exists ' + 'bikes' + """ (id integer PRIMARY KEY, 
                                                   productId integer NOT NULL,
                                                   name text NOT NULL,
+                                                  price integer NOT NULL,
                                                   qty integer,
                                                   color text NOT NULL,
                                                   location integer NOT NULL,
@@ -174,7 +176,7 @@ def get_ordered_component(orderId):
         user_query = """SELECT * FROM orderedComponents WHERE orderId=?"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query, (orderId, ))
-        return user_query_exec.fetchone()
+        return user_query_exec.fetchall()
     except sqlite3.Error as e:
         return(f"cannot get: {orderId}")
 
@@ -191,10 +193,10 @@ def cancel_ordered_component(ordId):
 
 
 #components
-def insert_component(productId, name, assembleable, qty, ty, bookedQty, location):
+def insert_component(productId, name, price, assembleable, qty, ty, location):
     try:
-        data  = """INSERT INTO component (productId, name, assembleable, qty, type, location) VALUES (?, ?, ?, ?, ?, ?, ?);"""
-        data_tuple = (productId, name, assembleable, qty, ty, bookedQty, location)
+        data  = """INSERT INTO component (productId, name, price, assembleable, qty, type, location) VALUES (?, ?, ?, ?, ?, ?, ?);"""
+        data_tuple = (productId, name, price, assembleable, qty, ty, location)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
@@ -224,13 +226,13 @@ def get_component(prodId):
 
 def modify_component(prod_id, qty):
     try:
-        data = """UPDATE component SET qty=qty+? WHERE id=?"""
+        data = """UPDATE component SET qty=? WHERE id=?"""
         data_var = (qty, prod_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
         connection.commit()
         if qty>0:
-            return(f"added {qty} components")
+            return(f"now: {qty} components")
         else:
             return(f"deleted {qty} components")
     except sqlite3.Error as e:
@@ -240,8 +242,8 @@ def modify_component(prod_id, qty):
 #bikes
 def insert_bike(productId, name, qty, color, location):
     try:
-        data  = """INSERT INTO bikes (productId, name, qty, color, location) VALUES (?, ?, ?, ?, ?);"""
-        data_tuple = (productId, name, qty, color, location)
+        data  = """INSERT INTO bikes (productId, name, price, qty, color, location) VALUES (?, ?, ?, ?, ?, ?);"""
+        data_tuple = (productId, name, price, qty, color, location)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
@@ -271,13 +273,13 @@ def get_bike(prodId):
 
 def modify_bike(prod_id, qty):
     try:
-        data = """UPDATE bikes SET qty=qty+? WHERE id=?"""
+        data = """UPDATE bikes SET qty=? WHERE id=?"""
         data_var = (qty, prod_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
         connection.commit()
         if qty>0:
-            return(f"added {qty} components")
+            return(f"now: {qty} components")
         else:
             return(f"deleted {qty} components")
     except sqlite3.Error as e:
@@ -288,7 +290,7 @@ def modify_bike(prod_id, qty):
 #customisations
 def insert_cust(bikeId, componentId):
     try:
-        data  = """INSERT INTO customisation (bikeId, componentId) VALUES (?, ?);"""
+        data  = """INSERT INTO customisation (bike_id, component_id) VALUES (?, ?);"""
         data_tuple = (bikeId, componentId)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
@@ -299,7 +301,7 @@ def insert_cust(bikeId, componentId):
         
 def cancel_cust(bikeId, componentId):
     try:
-        data = """DELETE FROM customisation WHERE bikeId = ? AND componentId = ?"""
+        data = """DELETE FROM customisation WHERE bike_id = ? AND component_id = ?"""
         data_tuple = (bikeId, componentId)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
@@ -310,7 +312,7 @@ def cancel_cust(bikeId, componentId):
 
 def get_cust(bikeId, componentId):
     try:
-        user_query ="""SELECT * FROM customisation WHERE bikeId = ? AND componentID = ?"""
+        user_query ="""SELECT * FROM customisation WHERE bike_id = ? AND component_id = ?"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query, (bikeId, componentId, ))
         return user_query_exec.fetchone()

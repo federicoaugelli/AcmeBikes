@@ -32,15 +32,16 @@ class create_ordered_component(BaseModel):
 class create_component(BaseModel):
     productId: int 
     name: str 
+    price: int
     assembleable: bool
     qty: int
     ty: str
-    bookedQty: int
     location: int
 
 class create_bike(BaseModel):
     productId: int
     name: str
+    price: int
     qty: int
     color: str
     location: int
