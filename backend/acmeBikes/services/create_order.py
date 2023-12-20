@@ -2,7 +2,7 @@ import pycamunda
 import pycamunda.processdef
 from pycamunda.message import CorrelateSingle
 from dotenv import load_dotenv
-import os
+import os, json
 
 def create_order(process_instance_id, process_dict):
     """ chiamata rivendite per creare l'ordine """
@@ -13,7 +13,42 @@ def create_order(process_instance_id, process_dict):
     ACMEBIKE_KEY = os.getenv("ACMEBIKE_KEY")
     print(f"create_order {process_instance_id}")
     try:
+        order = {
+            "customer": "mario",
+            "address": "via roma 1",
+            "bikes": [
+                {
+                    "bikeId": 1,
+                    "qty": 1,
+                    "components": [
+                        {
+                            "componentId": 1,
+                            "qty": 1
+                        },
+                        {
+                            "componentId": 2,
+                            "qty": 1
+                        }
+                    ]
+                },
+                {
+                    "bikeId": 2,
+                    "qty": 1,
+                    "components": [
+                        {
+                            "componentId": 1,
+                            "qty": 1
+                        },
+                        {
+                            "componentId": 2,
+                            "qty": 1
+                        }
+                    ]
+                }
+            ]
+        }
         start_instance = pycamunda.processdef.StartInstance(url=CAMUNDA_URL, key=ACMEBIKE_KEY)
+        start_instance.add_variable(name="order", value=json.dumps(order))
         process_instance = start_instance()
         process_dict[process_instance_id] = process_instance.id_
         

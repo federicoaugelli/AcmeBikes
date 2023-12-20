@@ -33,7 +33,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='verify_customisation',
         func=verify_customisation,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "order"])
 
     worker.subscribe(
         topic='notify_client',
