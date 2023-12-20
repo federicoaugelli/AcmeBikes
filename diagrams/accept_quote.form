@@ -1,10 +1,20 @@
 {
   "components": [
     {
+      "label": "Text field",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1p245c1",
+        "columns": null
+      },
+      "id": "Field_1rwcfeh",
+      "key": "preventivo"
+    },
+    {
       "label": "Do you accept the quote?",
       "type": "checkbox",
       "layout": {
-        "row": "Row_1p245c1",
+        "row": null,
         "columns": null
       },
       "id": "Field_0ppxmmu",
