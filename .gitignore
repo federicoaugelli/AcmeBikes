@@ -1,1 +1,10 @@
 /camunda
+
+/backend/acmeBikes/__pycache__
+/backend/acmeBikes/services/__pycache__
+/backend/acmeDB/__pycache__
+/backend/bank/__pycache__
+/backend/courier/__pycache__
+/backend/geoloc/__pycache__
+/backend/supplier/__pycache__
+

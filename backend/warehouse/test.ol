@@ -9,7 +9,7 @@ interface AcmeDbInterface {
 }
 
 outputPort AcmeDbService {
-    Location: "socket://localhost:8000/"
+    Location: "socket://localhost:8004/"
     Protocol: http { .method = "get" }
     Interfaces: AcmeDbInterface
 }
