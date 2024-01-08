@@ -38,10 +38,6 @@ def create_order(process_instance_id, process_dict):
                         {
                             "componentId": 1,
                             "qty": 1
-                        },
-                        {
-                            "componentId": 2,
-                            "qty": 1
                         }
                     ]
                 }
@@ -53,8 +49,8 @@ def create_order(process_instance_id, process_dict):
         process_dict[process_instance_id] = process_instance.id_
         
         msg = CorrelateSingle(CAMUNDA_URL, message_name="order_created",
-                              process_instance_id=process_instance.id_
-                              )
+                            process_instance_id=process_instance.id_, result_enabled=False
+                            )
         msg()
     except Exception as e:
         print(e)

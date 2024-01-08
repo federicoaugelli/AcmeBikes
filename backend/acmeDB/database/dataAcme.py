@@ -99,7 +99,7 @@ def insert_order(price, customer, address, shipment):
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
-        return(f"new order created")
+        return cursor.lastrowid
     except sqlite3.Error as e:
         return("Failed to create order: ", e)
 
@@ -240,7 +240,7 @@ def modify_component(prod_id, qty):
         
 
 #bikes
-def insert_bike(productId, name, qty, color, location):
+def insert_bike(productId, name, price, qty, color, location):
     try:
         data  = """INSERT INTO bikes (productId, name, price, qty, color, location) VALUES (?, ?, ?, ?, ?, ?);"""
         data_tuple = (productId, name, price, qty, color, location)
