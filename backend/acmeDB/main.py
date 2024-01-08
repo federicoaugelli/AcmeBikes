@@ -51,9 +51,9 @@ def delete_warehouse(warehouseId: int):
 
 '''ORDER'''
 @app.get("/order", tags=["order"])
-def get_order(order_id: int, customer: str):
+def get_order(order_id: int):
     try:
-        order = db.get_order(order_id, customer)
+        order = db.get_order(order_id)
         return order
     except Exception as e:
         return e

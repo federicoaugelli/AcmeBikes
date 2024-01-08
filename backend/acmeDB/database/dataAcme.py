@@ -3,7 +3,7 @@ import sqlite3
 path = "acmedb.db"
 database = sqlite3.connect(path)
 db = database.cursor()
-sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL)'
+sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL, latitude real NOT NULL, longitude real NOT NULL)'
 db.execute(sql)
 sql = 'create table if not exists ' + 'component' + """ (id integer PRIMARY KEY, 
                                                        productId integer NOT NULL,
@@ -104,14 +104,14 @@ def insert_order(price, customer, address, shipment):
         return("Failed to create order: ", e)
 
 
-def get_order(order_id, customer):
+def get_order(order_id):
     try:
-        user_query = """SELECT * FROM orders WHERE id=? AND customer=?"""
+        user_query = """SELECT * FROM orders WHERE id=?"""
         connection, cursor = connect(path)
-        user_query_exec = cursor.execute(user_query, (order_id, customer, ))
+        user_query_exec = cursor.execute(user_query, (order_id, ))
         return user_query_exec.fetchone()
     except sqlite3.Error as e:
-        return(f"cannot get: {customer}")
+        return(f"cannot get: {order_id}")
 
 def modify_order(order_id, price):
     try:
