@@ -315,7 +315,11 @@ def get_cust(bikeId, componentId):
         user_query ="""SELECT * FROM customisation WHERE bike_id = ? AND component_id = ?"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query, (bikeId, componentId, ))
-        return user_query_exec.fetchone()
+        isCust = user_query_exec.fetchone()
+        if isCust:
+            return True
+        else:
+            return False
     except sqlite3.Error as e:
         return(f"cannot get")
 
