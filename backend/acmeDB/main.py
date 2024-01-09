@@ -2,6 +2,8 @@ import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
 from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment, create_bike, create_customisation
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os, requests
 
 app = FastAPI(
     title='Database API',
@@ -16,6 +18,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+load_dotenv()
+GEOLOCATION_API_KEY = os.getenv("GEOLOCATION_API_KEY")
 
 @app.get("/")
 def read_root():
@@ -32,7 +37,8 @@ def get_warehouse(warehouseId: int):
 
 @app.post("/warehouse", tags=["warehouse"])
 def create_warehouse(body: create_warehouse):
-    warehouse = db.create_warehouse(body.name, body.address)
+    coordinates = requests.post(f"{GEOLOCATION_API_KEY}/distance/address", json={"address": body.address}).json()
+    warehouse = db.create_warehouse(body.name, body.address, coordinates[0], coordinates[1])
     return(warehouse)
 
 #da fare
