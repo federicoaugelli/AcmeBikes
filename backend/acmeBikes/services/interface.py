@@ -43,7 +43,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='verify_availability',
         func=verify_availability,
-        variables=["process_instance_id", "process_dict", "orderId"])
+        variables=["process_instance_id", "process_dict", "orderId", "order"])
     worker.subscribe(
         topic='create_order',
         func=create_order,

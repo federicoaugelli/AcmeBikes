@@ -13,7 +13,8 @@ sql = 'create table if not exists ' + 'component' + """ (id integer PRIMARY KEY,
                                                        qty integer,
                                                        type text,
                                                        location integer NOT NULL,
-                                                       FOREIGN KEY(location) REFERENCES warehouse(id)) """
+                                                       FOREIGN KEY(location) REFERENCES warehouse(id))
+                                                       FOREIGN KEY(productId) REFERENCES products(id))"""
 db.execute(sql)
 sql = 'create table if not exists ' + 'bikes' + """ (id integer PRIMARY KEY, 
                                                   productId integer NOT NULL,
@@ -22,13 +23,16 @@ sql = 'create table if not exists ' + 'bikes' + """ (id integer PRIMARY KEY,
                                                   qty integer,
                                                   color text NOT NULL,
                                                   location integer NOT NULL,
-                                                  FOREIGN KEY(location) REFERENCES warehouse(id)) """
+                                                  FOREIGN KEY(location) REFERENCES warehouse(id)) 
+                                                  FOREIGN KEY(productId) REFERENCES products(id))"""
+db.execute(sql)
+sql = 'create table if not exists ' + 'products' + """ (id integer PRIMARY KEY) """
 db.execute(sql)
 sql = 'create table if not exists ' + 'customisation'+ """ (id integer PRIMARY KEY,
                                                       bike_id integer NOT NULL,
-                                                      component_id integer NOT NULL,
-                                                      FOREIGN KEY(bike_id) REFERENCES bikes(id),
-                                                      FOREIGN KEY(component_id) REFERENCES component(id)) """
+                                                      component_id integer NOT NULL
+                                                      FOREIGN KEY(bike_id) REFERENCE products(id))
+                                                      FOREIGN KEY(component_id) REFERENCE products(id))"""
 db.execute(sql)
 sql = 'create table if not exists ' + 'orders' + """ (id integer PRIMARY KEY,
                                                     price real,
