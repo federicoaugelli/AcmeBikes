@@ -1,4 +1,4 @@
-import requests, os
+import requests, os, json
 from dotenv import load_dotenv
 
 def verify_availability(process_instance_id, process_dict, orderId, order):
@@ -8,16 +8,37 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
     # se non è da asseblare si cerca il magazzino più vicino al cliente, si calcola il costo della spediione 
     # e successivamente si marca il componente come assegnato
 
-
-
     print(f"availability {orderId.value}")
     load_dotenv()
     DB_URL = os.getenv("DB_URL")
     GEOLOC_URL = os.getenv("GEOLOC_URL")
 
-    ordered_components = requests.get(f"{DB_URL}/orderedcomponent?orderId={orderId.value}")
     order = requests.get(f"{DB_URL}/order?order_id={orderId.value}")
     all_warehouses = requests.get(f"{DB_URL}/warehouses")
+    
+    order_obj = json.loads(order.value)
+    for bike in order_obj['bikes']:
+        create_ordered_component = {
+            "componentId": 0,
+            "bikeId": bike['bikeId'],
+            "name": "Nome bici",
+            "qty": bike['qty'], 
+            "orderId": create_order_id
+        }
+        requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
+        # Add the components to the order
+        for component in bike['components']:
+            create_ordered_component = {
+                "componentId": component['componentId'],
+                "bikeId": 0,
+                "name": "Nome componente",
+                "qty": component['qty'], 
+                "orderId": create_order_id
+            }
+            requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
+
+    ordered_components = requests.get(f"{DB_URL}/orderedcomponent?orderId={orderId.value}")
+    
     for ordered_component in ordered_components:
         # Check if the component is assembleable
         component = requests.get(f"{DB_URL}/component?prod_id={ordered_component[1]}")
