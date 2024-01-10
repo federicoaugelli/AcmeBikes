@@ -59,6 +59,15 @@ def connect(db):
         return None, e
     return connection, cursor
 
+def get_all_warehouses():
+    try:
+        user_query = """SELECT id, latitude, longitude FROM warehouse"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query)
+        return user_query_exec.fetchall()
+    except sqlite3.Error as e:
+        return(f"cannot get: warehouses")
+
 #warehouse
 def get_warehouse(warehouseId):
     try:

@@ -30,6 +30,11 @@ def read_root():
 
 
 '''WAREHOUSES'''
+@app.get("/warehouses", tags=["warehouse"])
+def get_all_warehouses():
+    warehouses = db.get_all_warehouses()
+    return(warehouses)
+
 @app.get("/warehouse", tags=["warehouse"])
 def get_warehouse(warehouseId: int):
     warehouse = db.get_warehouse(warehouseId)

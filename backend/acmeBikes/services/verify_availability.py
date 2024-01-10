@@ -14,6 +14,7 @@ def verify_availability(process_instance_id, process_dict, orderId):
 
     ordered_components = requests.get(f"{DB_URL}/orderedcomponent?orderId={orderId}")
     order = requests.get(f"{DB_URL}/order?order_id={orderId}")
+    all_warehouses = requests.get(f"{DB_URL}/warehouses")
     for ordered_component in ordered_components:
         # Check if the component is assembleable
         component = requests.get(f"{DB_URL}/component?prod_id={ordered_component['componentId']}")
