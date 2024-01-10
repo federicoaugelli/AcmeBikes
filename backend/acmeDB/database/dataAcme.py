@@ -106,7 +106,28 @@ def delete_warehouse(warehouseId):
         return(f"deleted successfully.")
     except sqlite3.Error as e:
         return(f"An error occurred: {e}")
+    
+#products
+def insert_product(productId):
+    try:
+        data  = """INSERT INTO products (id) VALUES (?);"""
+        data_tuple = (productId, )
+        connection, cursor = connect(path)
+        cursor.execute(data, data_tuple)
+        connection.commit()
+        return cursor.lastrowid
+    except sqlite3.Error as e:
+        return("Failed to create product: ", e)
 
+
+def get_product(productId):
+    try:
+        user_query = """SELECT * FROM products WHERE id=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (productId, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get product: {productId}")
 #order
 def insert_order(price, customer, address, shipment):
     try:

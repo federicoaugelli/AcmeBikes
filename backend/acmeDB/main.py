@@ -57,7 +57,19 @@ def delete_warehouse(warehouseId: int):
     return warehouse
 
 
+'''PRODUCTS'''
+@app.get("/product", tags=["product"])
+def get_product(productId: int):
+    try:
+        order = db.get_product(productId)
+        return order
+    except Exception as e:
+        return e
 
+@app.post("/product", tags=["product"])
+def create_product(productId: int):
+    order = db.insert_product(productId)
+    return(order)
 
 
 '''ORDER'''
