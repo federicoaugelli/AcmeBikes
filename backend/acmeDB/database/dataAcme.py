@@ -71,7 +71,7 @@ def get_warehouse(warehouseId):
 
 def create_warehouse(name, address, latitude, longitude):
     try:
-        data  = """INSERT INTO warehouse (name, address, latitude, longitude) VALUES (?, ?);"""
+        data  = """INSERT INTO warehouse (name, address, latitude, longitude) VALUES (?, ?, ?, ?);"""
         data_tuple = (name, address, latitude, longitude)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
