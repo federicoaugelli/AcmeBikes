@@ -68,7 +68,7 @@ def connect(db):
 
 def get_all_warehouses():
     try:
-        user_query = """SELECT id, latitude, longitude FROM warehouse"""
+        user_query = """SELECT id, name, latitude, longitude, address FROM warehouse"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query)
         return user_query_exec.fetchall()
@@ -152,7 +152,7 @@ def get_order(order_id):
 
 def modify_order(order_id, price):
     try:
-        data = """UPDATE orders SET price=price+? WHERE id=?"""
+        data = """UPDATE orders SET price=? WHERE id=?"""
         data_var = (price, order_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
@@ -163,7 +163,7 @@ def modify_order(order_id, price):
 
 def add_shipment(order_id, shipment_price):
     try:
-        data = """UPDATE orders SET shipment=+? WHERE id=?"""
+        data = """UPDATE orders SET shipment=? WHERE id=?"""
         data_var = (shipment_price, order_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
@@ -257,7 +257,7 @@ def get_component(prodId):
         user_query = """SELECT * FROM component WHERE productId=?"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query, (prodId, ))
-        return user_query_exec.fetchone()
+        return user_query_exec.fetchall()
     except sqlite3.Error as e:
         return(f"cannot get: {productId}")
 
@@ -304,13 +304,13 @@ def get_bike(prodId):
         user_query = """SELECT * FROM bikes WHERE productId=?"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query, (prodId, ))
-        return user_query_exec.fetchone()
+        return user_query_exec.fetchall()
     except sqlite3.Error as e:
         return(f"cannot get")
 
 def modify_bike(prod_id, qty):
     try:
-        data = """UPDATE bikes SET qty=? WHERE id=?"""
+        data = """UPDATE bikes SET qty=qty+? WHERE id=?"""
         data_var = (qty, prod_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)

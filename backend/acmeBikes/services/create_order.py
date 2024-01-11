@@ -18,29 +18,15 @@ def create_order(process_instance_id, process_dict):
             "address": "via roma 2",
             "bikes": [
                 {
-                    "productId": 1,
+                    "productId": 234234,
                     "qty": 1,
                     "components": [
                         {
-                            "productId": 1,
+                            "productId": 123123,
                             "qty": 1
                         },
-                        {
-                            "productId": 2,
-                            "qty": 1
-                        }
                     ]
                 },
-                {
-                    "productId": 2,
-                    "qty": 1,
-                    "components": [
-                        {
-                            "productId": 1,
-                            "qty": 1
-                        }
-                    ]
-                }
             ]
         }
         start_instance = pycamunda.processdef.StartInstance(url=CAMUNDA_URL, key=ACMEBIKE_KEY)
