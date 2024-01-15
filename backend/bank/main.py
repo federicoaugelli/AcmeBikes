@@ -2,7 +2,7 @@ import database.databank as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
 import auth.crypt_utils as crypt_utils
 from auth.auth_bearer import JWTBearer
-from auth.auth_handler import signJWT
+from auth.auth_handler import signJWT, decodeJWT
 from model import payment_body, check_token_body, insert_user, user_login_schema
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -46,6 +46,14 @@ def read_root():
 def user_login_schema(body: insert_user):
     user_data = db.insert_user(body.name, body.username, crypt_utils.get_hashed_password(body.password))
     return(user_data)
+
+@app.get("/user", tags=["user"])
+def get_user(user_data: str = Depends(JWTBearer()), dependencies=Depends(JWTBearer())):
+    try:
+        data = decodeJWT(user_data)
+        return data
+    except Exception as e:
+        return e
 
 @app.post("/pay")
 def pay(body: payment_body, dependencies=Depends(JWTBearer())):
