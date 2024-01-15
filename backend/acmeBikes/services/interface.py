@@ -51,7 +51,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='send_quote',
         func=send_quote,
-        variables=["process_instance_id", "process_dict", "preventivo"])
+        variables=["process_instance_id", "process_dict", "orderId"])
     worker.subscribe(
         topic='send_accept_quote',
         func=send_accept_quote,

@@ -117,10 +117,10 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
                 # Update component quantity
                 requests.put(f"{DB_URL}/component?component_id={choosed_component[0]}&qty={-1*component['qty']}")
 
-
             price += sum(_comp[3] * component['qty'] for _comp in components)
-
+            
     #update order price
-    requests.put(f"{DB_URL}/order?order_id={orderId.value}&price={price}")
+    requests.put(f"{DB_URL}/order", json={"order_id": orderId.value, "price": price})
+    requests.put(f"{DB_URL}/order/shipment", json={"order_id": orderId.value, "shipment": shipment})
  
     return {"preventivo": price}

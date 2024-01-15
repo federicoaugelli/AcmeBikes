@@ -1,20 +1,31 @@
 {
   "components": [
     {
-      "label": "Text field",
+      "label": "Prezzo componenti",
       "type": "textfield",
       "layout": {
         "row": "Row_1p245c1",
         "columns": null
       },
       "id": "Field_1rwcfeh",
-      "key": "preventivo"
+      "key": "price",
+      "properties": {}
+    },
+    {
+      "label": "Spedizione",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0rjv47g",
+        "columns": null
+      },
+      "id": "Field_1euutuy",
+      "key": "shipment"
     },
     {
       "label": "Do you accept the quote?",
       "type": "checkbox",
       "layout": {
-        "row": null,
+        "row": "Row_1xphh6x",
         "columns": null
       },
       "id": "Field_0ppxmmu",
