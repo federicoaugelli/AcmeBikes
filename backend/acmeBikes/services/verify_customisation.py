@@ -27,25 +27,5 @@ def verify_customisation(process_instance_id, process_dict, order):
     created_order = requests.post(f"{DB_URL}/order", json=create_order)
     create_order_id = int(created_order.text)
     print(f"ordine {created_order.text}")
-    # Add the bikes to the order
-    '''for bike in order_obj['bikes']:
-        create_ordered_component = {
-            "componentId": 0,
-            "bikeId": bike['bikeId'],
-            "name": "Nome bici",
-            "qty": bike['qty'], 
-            "orderId": create_order_id
-        }
-        requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
-        # Add the components to the order
-        for component in bike['components']:
-            create_ordered_component = {
-                "componentId": component['componentId'],
-                "bikeId": 0,
-                "name": "Nome componente",
-                "qty": component['qty'], 
-                "orderId": create_order_id
-            }
-            requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)'''
 
-    return {"isCustomisable": True, "orderId": create_order_id, "order": order_obj} 
+    return {"isCustomisable": True, "orderId": create_order_id, "order": json.dumps(order_obj)} 
