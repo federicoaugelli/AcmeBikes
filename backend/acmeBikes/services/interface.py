@@ -63,11 +63,11 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='prepayment',
         func=prepayment,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "order"])
     worker.subscribe(
         topic='verify_prepayment',
         func=verify_prepayment,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "pre_payment_token", "pre_payment_amount"])
     worker.subscribe(
         topic='token_accepted',
         func=token_accepted,
