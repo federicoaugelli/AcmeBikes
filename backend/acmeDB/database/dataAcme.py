@@ -263,7 +263,7 @@ def get_component(prodId):
 
 def modify_component(prod_id, qty):
     try:
-        data = """UPDATE component SET qty=? WHERE id=?"""
+        data = """UPDATE component SET qty=qty+? WHERE id=?"""
         data_var = (qty, prod_id)
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
