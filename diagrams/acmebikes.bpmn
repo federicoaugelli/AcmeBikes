@@ -120,7 +120,7 @@
       <bpmn:incoming>Flow_047gi83</bpmn:incoming>
       <bpmn:outgoing>Flow_12i8z0r</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_123av0q">
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3M</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_047gi83" sourceRef="Gateway_0az9zs3" targetRef="Event_05gkbbn" />

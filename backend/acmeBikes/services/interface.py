@@ -59,7 +59,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='cancel_order',
         func=cancel_order,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "orderId"])
     worker.subscribe(
         topic='prepayment',
         func=prepayment,
