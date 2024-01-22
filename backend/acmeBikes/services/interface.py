@@ -79,7 +79,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='create_list',
         func=create_list,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "orderId"])
     worker.subscribe(
         topic='send_bicycle',
         func=send_bicycle,

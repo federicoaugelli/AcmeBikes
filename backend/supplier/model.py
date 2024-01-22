@@ -1,8 +1,8 @@
 from pydantic import BaseModel
+from typing import List
 
-class component(BaseModel):
-    code: int
-    qty: int
+class components_list(BaseModel):
+    productIds: List[int]
 
 
 
