@@ -133,6 +133,14 @@ def get_ordered_component(orderId: int):
 
 
 '''COMPONENTS'''
+@app.get("/component/single", tags=["components"])
+def get_single_component(Id: int):
+    try:
+        component = db.get_component_by_id(Id)
+        return(component)
+    except Exception as e:
+        return e
+
 @app.get("/component", tags=["components"])
 def get_components(prod_id: int):
     try:
@@ -167,6 +175,15 @@ def delete_component(prod_id: int):
 
 
 '''BIKES'''
+@app.get("/bike/single", tags=["bikes"])
+def get_single_bike(Id: int):
+    try:
+        bike = db.get_bike_by_id(Id)
+        return(bike)
+    except Exception as e:
+        return e
+
+
 
 @app.get("/bike", tags=["bikes"])
 def get_bikes(bike_id: int):

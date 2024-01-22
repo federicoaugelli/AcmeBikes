@@ -261,6 +261,15 @@ def get_component(prodId):
     except sqlite3.Error as e:
         return(f"cannot get: {productId}")
 
+def get_component_by_id(Id):
+    try:
+        user_query = """SELECT * FROM component WHERE id=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (Id, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get: {productId}")
+
 def modify_component(prod_id, qty):
     try:
         data = """UPDATE component SET qty=qty+? WHERE id=?"""
@@ -307,6 +316,16 @@ def get_bike(prodId):
         return user_query_exec.fetchall()
     except sqlite3.Error as e:
         return(f"cannot get")
+
+def get_bike_by_id(Id):
+    try:
+        user_query = """SELECT * FROM bikes WHERE id=?"""
+        connection, cursor = connect(path)
+        user_query_exec = cursor.execute(user_query, (Id, ))
+        return user_query_exec.fetchone()
+    except sqlite3.Error as e:
+        return(f"cannot get: {productId}")
+
 
 def modify_bike(prod_id, qty):
     try:
