@@ -3,7 +3,7 @@ import sqlite3
 path = "acmedb.db"
 database = sqlite3.connect(path)
 db = database.cursor()
-sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL, latitude real NOT NULL, longitude real NOT NULL)'
+sql = 'create table if not exists ' + 'warehouse' + ' (id integer PRIMARY KEY, name text NOT NULL, address text NOT NULL, latitude real NOT NULL, longitude real NOT NULL, port integer NOT NULL)'
 db.execute(sql)
 
 
@@ -68,7 +68,7 @@ def connect(db):
 
 def get_all_warehouses():
     try:
-        user_query = """SELECT id, name, latitude, longitude, address FROM warehouse"""
+        user_query = """SELECT id, name, latitude, longitude, address, port FROM warehouse"""
         connection, cursor = connect(path)
         user_query_exec = cursor.execute(user_query)
         return user_query_exec.fetchall()
