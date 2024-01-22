@@ -14,4 +14,4 @@ def verify_prepayment(process_instance_id, process_dict, pre_payment_token, pre_
 
     check_token = requests.post(f"{BANK_URL}/checktoken", json={"tx_id": int(pre_payment_token.value), "amount": float(pre_payment_amount.value)}, headers=headers)
 
-    return {"verify_prepayment": check_token}
+    return {"verify_prepayment": bool(check_token.text)}

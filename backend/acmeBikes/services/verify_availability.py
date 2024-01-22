@@ -20,7 +20,7 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
     # Get all warehouses
     all_warehouses = requests.get(f"{DB_URL}/warehouses").json()
     # Get customer coordinates
-    customer_coordinates = requests.post(f"{GEOLOC_URL}/distance/address?address={order_obj['address']}")
+    customer_coordinates = requests.post(f"{GEOLOC_URL}/distance/address", json = {"address": order_obj['address']})
 
     # Get main warehouse
     main_warehouse = next((warehouse for warehouse in all_warehouses if warehouse[1] == "sede principale"), None)
