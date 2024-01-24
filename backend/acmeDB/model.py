@@ -3,6 +3,7 @@ from pydantic import BaseModel
 class create_warehouse(BaseModel):
     name: str
     address: str
+    port: int
 
 class create_order(BaseModel):
     price: int

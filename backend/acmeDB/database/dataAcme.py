@@ -85,9 +85,9 @@ def get_warehouse(warehouseId):
     except sqlite3.Error as e:
         return(f"cannot get: {name}")
 
-def create_warehouse(name, address, latitude, longitude):
+def create_warehouse(name, address, latitude, longitude, port):
     try:
-        data  = """INSERT INTO warehouse (name, address, latitude, longitude) VALUES (?, ?, ?, ?);"""
+        data  = """INSERT INTO warehouse (name, address, latitude, longitude, port) VALUES (?, ?, ?, ?, ?);"""
         data_tuple = (name, address, latitude, longitude)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)

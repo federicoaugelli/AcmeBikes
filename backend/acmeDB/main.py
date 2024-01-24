@@ -43,13 +43,9 @@ def get_warehouse(warehouseId: int):
 @app.post("/warehouse", tags=["warehouse"])
 def create_warehouse(body: create_warehouse):
     coordinates = requests.post(f"{GEOLOCATION_API_KEY}/distance/address", json={"address": body.address}).json()
-    warehouse = db.create_warehouse(body.name, body.address, coordinates[0], coordinates[1])
+    warehouse = db.create_warehouse(body.name, body.address, coordinates[0], coordinates[1], body.port)
     return(warehouse)
 
-#da fare
-@app.put("/warehouse", tags=["warehouse"])
-def modify_warehouse():
-    return 0
 
 @app.delete("/warehouse", tags=["warehouse"])
 def delete_warehouse(warehouseId: int):
