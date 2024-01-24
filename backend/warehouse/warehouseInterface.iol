@@ -1,5 +1,5 @@
 type Component: void {
-     .componentId: int,
+     .componentId: int
      .orderId: int
 }
 
@@ -11,8 +11,12 @@ type ComponentId: void {
      .component_id: int
 }
 
+type Test: void {
+     .test: string
+}
+
 interface warehouseInterface {
-     RequestResponse: sendComponent(ComponentRequest)(bool),
+     RequestResponse: getStatus(Test)(Test)
 }
 
 interface AcmeDbInterface {

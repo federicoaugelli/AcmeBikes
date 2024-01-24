@@ -18,11 +18,11 @@ def create_order(process_instance_id, process_dict):
             "address": "via roma 2",
             "bikes": [
                 {
-                    "productId": 234234,
+                    "productId": 234,
                     "qty": 1,
                     "components": [
                         {
-                            "productId": 123123,
+                            "productId": 123,
                             "qty": 1
                         },
                     ]
