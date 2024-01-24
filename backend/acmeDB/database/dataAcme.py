@@ -88,13 +88,13 @@ def get_warehouse(warehouseId):
 def create_warehouse(name, address, latitude, longitude, port):
     try:
         data  = """INSERT INTO warehouse (name, address, latitude, longitude, port) VALUES (?, ?, ?, ?, ?);"""
-        data_tuple = (name, address, latitude, longitude)
+        data_tuple = (name, address, latitude, longitude, port)
         connection, cursor = connect(path)
         cursor.execute(data, data_tuple)
         connection.commit()
         return(f"{name} created")
     except sqlite3.Error as e:
-        return("Failed to create user: ", e)
+        return("Failed to create warehouse: ", e)
 
 def delete_warehouse(warehouseId):
     try:
