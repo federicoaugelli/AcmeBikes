@@ -1,0 +1,76 @@
+CoreografiaOrdine :== (
+	1;
+	(
+		1
+	)+(
+		1;
+		(
+			//Timer	
+		)+(
+			1;
+			1;
+			1;
+			1;
+			1;
+			1;
+			1;
+			1;
+			1;
+			(
+				1;
+				1;
+			)+(
+				1;
+				1;
+				(
+					1;
+					(
+						1;
+						1;
+					)+(
+						(
+							1;
+							1;
+						)|(
+							1;
+
+						)
+					)
+				)|(
+					InviaListaComponenti@AcmeBike;
+					(
+						/InviaListaCompEst@FornitoreEst;
+						InviaComponenti@FornitoreEst;
+
+						(
+							/InviaComponenti@CorriereEst;
+							1;
+						)|(
+							/InviaComponenti@AcmeBikes;
+
+						)
+					)
+				)
+				1;
+				1;
+				1;
+				1;
+				1;
+				1;
+				1;
+				1;
+				1;
+				1;
+				(
+					1;
+					1;
+				)+(
+					1;
+					1;
+					1;
+				)
+
+			)
+		)
+	)
+)

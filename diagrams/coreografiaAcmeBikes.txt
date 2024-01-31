@@ -1,0 +1,77 @@
+quando metto /vuol dire che va messa la liena sul nome dell'operazione
+CoreografiaOrdine :== (
+	InvioOrdine@Rivendita;
+	(
+		/CastomzzazioneNonFattibile@Rivendita
+	)+(
+		/InvioPreventivo@Rivendita;
+		(
+			//Timer	
+		)+(
+			AccettaPreventivo@Rivendita;
+			1 ;
+			1 ;
+			1 ;
+			1 ;
+			InvioToken@Rivendita;
+			/LoginBanca@Banca;
+			ConfermaLogin@Banca;
+			/ConvalidaToken@Banca;
+			(
+				TokenInvalid@Banca;
+				/NotifyTokenInvalid@Rivendita;
+			)+(
+				TokenValid@Banca;
+				/AccontoAccettato@Rivendita;
+				(
+					/InviaListaComponenti@MagazzinoPrin;
+					(
+						;
+						;
+					)+(
+						(
+							;
+							;
+						)|(
+							InviaComponenti@MagazzinoPrin;
+
+						)
+					)
+				)|(
+					/InviaListaComponenti@MagazzinoSec;
+					(
+						;
+						;
+
+						(
+							;
+							;
+						)|(
+							InviaComponenti@MazzinoSec;
+
+						)
+					)
+				)
+				/InviaCicli@CorriereEst;
+				;
+				;
+				;
+				;
+				;
+				InvioToken@Rivendita;
+				/LoginBanca@AcmeBikes;
+				ConfermaLogin@Banca;
+				/ConvalidaToken@Banac;
+				(
+					TokenValid@Banca;
+					/NotifyTokenValid@Rivendita;
+				)+(
+					TokenInvalid@Banca;
+					/NotifyTokenInvalid@Rivendita;
+					LoginBanca@Rivendita;
+				)
+
+			)
+		)
+	)
+)

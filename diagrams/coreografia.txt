@@ -1,5 +1,5 @@
 CoreografiaOrdine :== (
-	InvioOrdine : Rivendita -> AcmeBike
+	InvioOrdine : Rivendita -> AcmeBike;
 	(
 		CastomzzazioneNonFattibile : AcmeBike -> Rivendita
 	)+(
@@ -39,8 +39,6 @@ CoreografiaOrdine :== (
 				)|(
 					InviaListaComponenti : AcmeBike -> MagazzinoSec;
 					(
-
-					)+(
 						InviaListaCompEst : MagazzinoSec -> FornitoreEst;
 						InviaComponenti : FornitoreEst -> MagazzinoSec;
 
