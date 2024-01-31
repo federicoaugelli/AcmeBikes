@@ -2,6 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 import requests
+from zeep import Client
 
 def create_list(process_instance_id, process_dict, orderId):
     print(f"create_list {process_instance_id}")
@@ -19,11 +20,24 @@ def create_list(process_instance_id, process_dict, orderId):
     for ordered_component in ordered_components:
         if ordered_component[1] == 0:
             bike = requests.get(f"{DB_URL}/bike/single?Id={ordered_component[2]}").json()
-            warehouse_bikes_lists[bike[6]].append(bike[0])
+            warehouse_bikes_lists[bike[6]].append({"component_id": bike[0]})
         elif ordered_component[2] == 0:
             component = requests.get(f"{DB_URL}/component/single?Id={ordered_component[1]}").json()
-            warehouse_components_lists[component[7]].append(component[0])
+            warehouse_components_lists[component[7]].append({"component_id": component[0], 
+                                                             "qty": ordered_component[5],
+                                                             "assembleable": ordered_component[4]})
 
-    
+    client = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
+
+    # Create a request payload
+    request_payload = {
+        'components': warehouse_components_lists[1]
+    }
+
+    # Make the SOAP call
+    response = client.service.checkComponents(**request_payload)
+
+    # Print the response
+    print(response)
         
     return {"create_list": True}
