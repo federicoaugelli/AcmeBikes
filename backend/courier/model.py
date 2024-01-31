@@ -8,3 +8,8 @@ class geo_distance(BaseModel):
 
 class user_address(BaseModel):
     address: str
+
+class components(BaseModel):
+    component_id: int
+    qty: int   
+    assembleable: bool

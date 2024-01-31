@@ -1,14 +1,15 @@
-type Component: void {
-     .componentId: int
-     .orderId: int
-}
-
 type ComponentRequest: void{
     .components[0, *]: Component
 }
 
-type ComponentId: void {
+type ComponentResponse: void{
+    .components[0, *]: Component
+}
+
+type Component: void {
      .component_id: int
+     .qty: int
+     .assembleable: bool
 }
 
 type Test: void {
@@ -17,8 +18,9 @@ type Test: void {
 
 interface warehouseInterface {
      RequestResponse: getStatus(Test)(Test)
+     RequestResponse: checkComponents(ComponentRequest)(ComponentResponse)
 }
 
 interface AcmeDbInterface {
-    RequestResponse: checkIsAssembleable(ComponentId)(int)
+    RequestResponse: checkIsAssembleable(ComponentRequest)(int)
 }
