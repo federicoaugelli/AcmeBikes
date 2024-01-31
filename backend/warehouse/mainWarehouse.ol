@@ -1,5 +1,6 @@
 include "console.iol"
 include "warehouseInterface.iol"
+include "json_utils.iol"
 
 inputPort MainWarehouseService {
 	Location: "socket://localhost:8085"
@@ -13,7 +14,7 @@ interface CourierInterface {
 
 
 interface SupplierInterface {
-    RequestResponse: getComponent(ComponentRequest)(string)
+    RequestResponse: supplier(ComponentRequest)(string)
 }
 
 outputPort CourierService {
@@ -24,7 +25,7 @@ outputPort CourierService {
 
 outputPort SupplierService {
     Location: "socket://localhost:8003/"
-    Protocol: http { .method = "get" }
+    Protocol: http { .method = "post" }
     Interfaces: SupplierInterface
 }
 
@@ -39,16 +40,23 @@ main{
 		println@Console( response )()
 	}
 	[checkComponents(componentsRequest)(response){
-		componentsForSupplier[0] = void
-		componentsForCourier[0] = void
-		componentsForAcmeBike[0] = void
-		for (component in ComponentRequest.components) {
+		// componentsForSupplier[0] = ComponentRequest
+		// componentsForCourier[0] = ComponentRequest
+		// componentsForAcmeBike[0] = ComponentRequest
+		getJsonString@JsonUtils( componentsRequest )( test );
+		println@Console( test )()
+		for (component in componentsRequest.components) {
+			getJsonString@JsonUtils( component )( testj );
+			println@Console( testj )()
 			if (component.qty < 0){
 				componentsForSupplier[ #componentsForSupplier ] = component
 			}
 		}
+  		getJsonString@JsonUtils( componentsForSupplier )( componentsForSupplierJson );
+		println@Console( componentsForSupplierJson )()
+		println@Console( #componentsForSupplier )()
 		// Chiedere al fornitore esterno
-		getComponent@SupplierService(componentsForSupplier)( supplierResponse );
+		supplier@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
 
 		
