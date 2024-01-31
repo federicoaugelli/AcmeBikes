@@ -1,0 +1,78 @@
+CoreografiaOrdine :== (
+	InvioOrdine : Rivendita -> AcmeBike
+	(
+		CastomzzazioneNonFattibile : AcmeBike -> Rivendita
+	)+(
+		InvioPreventivo : AcmeBike -> Rivendita;
+		(
+			//Timer	
+		)+(
+			AccettaPreventivo : Rivendita -> AcmeBikes;
+			LoginBanca : Rivendita -> Banca;
+			ConfermaLogin : Banca -> Rivendita;
+			InvioPagamento : Rivendita -> Banca;
+			RilasciaToken : Banca -> Rivendita;
+			InvioToken : Rivendita -> AcmeBikes;
+			LoginBanca : AcmeBike -> Banca;
+			ConfermaLogin : Banca -> AcmeBikes;
+			ConvalidaToken : AcmeBikes -> Banca;
+			(
+				TokenInvalid : Banca -> AcmeBikes;
+				NotifyTokenInvalid : AcmeBike -> Rivendita;
+			)+(
+				TokenValid : Banca -> AcmeBikes;
+				AccontoAccettato : AcmeBike -> Rivendita;
+				(
+					InviaListaComponenti : AcmeBike -> MagazzinoPrin;
+					(
+						InviaListaCompEst : MagazzinoPrin -> FornitoreEst;
+						InviaComponenti : FornitoreEst -> MagazzinoPrin;
+					)+(
+						(
+							InviaComponenti : MagazzinoPrin -> CorriereEst;
+							InviaComponenti : CorriereEst -> Rivendita;
+						)|(
+							InviaComponenti : MagazzinoPrin -> AcmeBikes;
+
+						)
+					)
+				)|(
+					InviaListaComponenti : AcmeBike -> MagazzinoSec;
+					(
+
+					)+(
+						InviaListaCompEst : MagazzinoSec -> FornitoreEst;
+						InviaComponenti : FornitoreEst -> MagazzinoSec;
+
+						(
+							InviaComponenti : MagazzinoSec -> CorriereEst;
+							InviaComponenti : CorriereEst -> Rivendita;
+						)|(
+							InviaComponenti : MagazzinoSec -> AcmeBikes;
+
+						)
+					)
+				)
+				InviaCicli : AcmeBikes -> CorriereEst;
+				InviaComponenti : CorriereEst -> Rivendita;
+				LoginBanca : Rivendita -> Banca;
+				ConfermaLogin : Banca -> Rivendita;
+				InvioPagamento : Rivendita -> Banca;
+				RilasciaToken : Banca -> Rivendita;
+				InvioToken : Rivendita -> AcmeBikes;
+				LoginBanca : AcmeBikes -> Banca;
+				ConfermaLogin: Banca -> AcmeBikes;
+				ConvalidaToken : AcmeBikes -> Banca;
+				(
+					TokenValid : Banca -> AcmeBikes;
+					NotifyTokenValid : AcmeBike -> Rivendita;
+				)+(
+					TokenInvalid : Banca -> AcmeBikes;
+					NotifyTokenInvalid : AcmeBike -> Rivendita;
+					LoginBanca : Rivendita -> Banca;
+				)
+
+			)
+		)
+	)
+)
