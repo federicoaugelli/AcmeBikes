@@ -6,7 +6,6 @@ import requests
 def verify_prepayment(process_instance_id, process_dict, pre_payment_token, pre_payment_amount):
     print(f"verify_prepayment {process_instance_id}")
     load_dotenv()
-    print("AA",pre_payment_token, pre_payment_amount)
     BANK_URL = os.getenv("BANK_URL")
     login = requests.post(f"{BANK_URL}/login", json={"username": "luca", "password": "luca"})
     token = login.json()["access_token"]
