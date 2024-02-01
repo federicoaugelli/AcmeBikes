@@ -74,3 +74,19 @@ CoreografiaOrdine :== (
 		)
 	)
 )
+
+Proprieta di correctedness
+la correttezza della composizione
+sequenziale `e stata migliorata aggiungendo quanto possibile degli ACK, mentre la correttezza
+dei punti di scelta `e stata assicurata verificando che lo stesso ruolo compaia in
+ogni transizione iniziale per ogni punto di scelta e che i ruoli dei branches relativi siano
+gli stessi.
+-	Alla riga due AcmeBike è destinatario in InvioOrdine ed è quindi mittente sia in CastomzzazioneNonFattibile 
+	che in InvioPreventivo;
+-	Alla riga 6 in InvioPreventivo, Rivendite è destinatario ed è quindi mittente in AccettaPreventivo;
+-	Alla riga 18 Banca è destinatario di ConvalidaToken, diventa quindi mittente in TokenInvalid e in TokenValid
+-	Alla riga 26 MagagginoPrin è destinatario di InviaListaComponenti, diventa quindi mittente in InviaListaCompEst
+	e in InviaComponenti
+-	Alla riga 40 MagazzinoSec è destinatario di InviaListaComponenti ed è quindi mittente in InviaListaCompEst
+	e in InviaComponenti
+- 	Alal riga 63 Banca è destinatario di ConvalidaToken, diventa quindi mittente in TokenValid e TokenInvalid
