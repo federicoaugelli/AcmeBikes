@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_10786dk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.12.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_10786dk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
   <bpmn:process id="Resale_Process" isExecutable="true" camunda:historyTimeToLive="100000">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_0decigl</bpmn:outgoing>
@@ -11,7 +11,9 @@
       <bpmn:outgoing>Flow_07k7jh2</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1hc0afx" messageRef="Message_1k8d8gk" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1k10wt2" sourceRef="Gateway_0fy346l" targetRef="Event_0pxil3v" />
+    <bpmn:sequenceFlow id="Flow_1k10wt2" sourceRef="Gateway_0fy346l" targetRef="Event_0pxil3v">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">{!order_accepted}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_0tediyv">
       <bpmn:incoming>Flow_07k7jh2</bpmn:incoming>
     </bpmn:endEvent>
@@ -21,7 +23,9 @@
       <bpmn:outgoing>Flow_0700yow</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_26loub3" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te" />
+    <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">order_accepted}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:endEvent id="Event_1yqsgmt">
       <bpmn:incoming>Flow_1u17rmq</bpmn:incoming>
     </bpmn:endEvent>

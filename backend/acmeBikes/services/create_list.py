@@ -25,7 +25,7 @@ def create_list(process_instance_id, process_dict, orderId):
             component = requests.get(f"{DB_URL}/component/single?Id={ordered_component[1]}").json()
             warehouse_components_lists[component[7]].append({"component_id": component[0], 
                                                              "qty": component[5],
-                                                             "assembleable": ordered_component[4]})
+                                                             "assembleable": component[4]})
 
     client = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
 

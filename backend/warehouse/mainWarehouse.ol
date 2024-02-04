@@ -43,18 +43,16 @@ main{
 		// componentsForSupplier[0] = ComponentRequest
 		// componentsForCourier[0] = ComponentRequest
 		// componentsForAcmeBike[0] = ComponentRequest
-		getJsonString@JsonUtils( componentsRequest )( test );
-		println@Console( test )()
 		for (component in componentsRequest.components) {
-			getJsonString@JsonUtils( component )( testj );
-			println@Console( testj )()
 			if (component.qty < 0){
+				println@Console( "Sono qua" )()
 				componentsForSupplier[ #componentsForSupplier ] = component
 			}
 		}
   		getJsonString@JsonUtils( componentsForSupplier )( componentsForSupplierJson );
 		println@Console( componentsForSupplierJson )()
 		println@Console( #componentsForSupplier )()
+
 		// Chiedere al fornitore esterno
 		supplier@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
