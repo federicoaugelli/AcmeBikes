@@ -40,20 +40,16 @@ main{
 		println@Console( response )()
 	}
 	[checkComponents(componentsRequest)(response){
-		// componentsForSupplier[0] = ComponentRequest
-		// componentsForCourier[0] = ComponentRequest
-		// componentsForAcmeBike[0] = ComponentRequest
+		i = 0
 		for (component in componentsRequest.components) {
 			if (component.qty < 0){
-				println@Console( "Sono qua" )()
-				componentsForSupplier[ #componentsForSupplier ] = component
+				componentsForSupplier.components[i] << component
+				i = i + 1
 			}
 		}
-  		getJsonString@JsonUtils( componentsForSupplier )( componentsForSupplierJson );
-		println@Console( componentsForSupplierJson )()
-		println@Console( #componentsForSupplier )()
-
 		// Chiedere al fornitore esterno
+		getJsonString@JsonUtils( componentsForSupplier )( componentsForSupplierJson );
+		println@Console( componentsForSupplierJson )()
 		supplier@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
 

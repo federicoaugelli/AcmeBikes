@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 @app.post("/supplier", tags=["supplier"])
-def get_component(body: List[components]):
+def get_component(body: components_list):
    order = body
    return "OK"
     
