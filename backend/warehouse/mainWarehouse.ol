@@ -19,13 +19,17 @@ interface SupplierInterface {
 
 outputPort CourierService {
     Location: "socket://localhost:8001/"
-    Protocol: http { .method = "post" }
+    Protocol: http { 
+		.method = "post"
+		.format = "json" }
     Interfaces: CourierInterface
 }
 
 outputPort SupplierService {
     Location: "socket://localhost:8003/"
-    Protocol: http { .method = "post" }
+    Protocol: http { 
+		.method = "post"
+		.format = "json" }
     Interfaces: SupplierInterface
 }
 
@@ -48,25 +52,26 @@ main{
 			}
 		}
 		// Chiedere al fornitore esterno
-		getJsonString@JsonUtils( componentsForSupplier )( componentsForSupplierJson );
-		println@Console( componentsForSupplierJson )()
 		supplier@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
 
-		
+		j = 0
+		z = 0
 		for (component in componentsRequest.components) {
 			if (component.assembleable){
-				componentsForCourier[ #componentsForCourier ]  = component
+				componentsForCourier.components[j]  = component
+				j = j + 1
 			}
 			else {
-				componentsForAcmeBike[ #componentsForAcmeBike ] = component
+				componentsForAcmeBike.components[z] = component
+				z = z + 1
 			}
 		}
 		// Contattare corriere
 		shipment@CourierService(componentsForCourier)( courierResponse );
     	println@Console( courierResponse )()
 
-		response.components = componentsForAcmeBike
+		response = componentsForAcmeBike
 	}]{
 		println@Console( response )()
 	}

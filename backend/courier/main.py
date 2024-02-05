@@ -3,7 +3,7 @@ import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
-from model import components
+from model import components, components_list
 
 app = FastAPI(
     title='Courier API',
@@ -31,5 +31,5 @@ def get_price_by_places(sender: str, receiver: str):
     return int(price)
 
 @app.post("/shipment", tags=["courier"])
-def shipment(components: List[components]):
-    return "Shipped"
+def shipment(body: components_list):
+    return "Shipped successfully!"
