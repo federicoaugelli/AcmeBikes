@@ -59,11 +59,11 @@ main{
 		z = 0
 		for (component in componentsRequest.components) {
 			if (component.assembleable){
-				componentsForCourier.components[j]  = component
+				componentsForCourier.components[j] << component
 				j = j + 1
 			}
 			else {
-				componentsForAcmeBike.components[z] = component
+				componentsForAcmeBike.components[z] << component
 				z = z + 1
 			}
 		}
