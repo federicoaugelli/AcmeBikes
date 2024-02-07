@@ -16,4 +16,5 @@ class components(BaseModel):
     assembleable: bool
 
 class components_list(BaseModel):
+    resale_instance_id: str
     components: List[components]

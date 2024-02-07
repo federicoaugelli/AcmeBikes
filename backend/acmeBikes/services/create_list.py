@@ -10,6 +10,12 @@ def create_list(process_instance_id, process_dict, orderId):
     # a seconda della loro posizione e della disponibilità
     load_dotenv()
     DB_URL = os.getenv("DB_URL")
+
+    # list out keys and values separately
+    key_list = list(process_dict.keys())
+    val_list = list(process_dict.values())        
+    position = val_list.index(process_instance_id)
+    resale_process_instance_id = key_list[position]
     
     ordered_components = requests.get(f"{DB_URL}/orderedcomponent?orderId={orderId.value}").json()
     all_warehouses = requests.get(f"{DB_URL}/warehouses").json()
@@ -31,6 +37,7 @@ def create_list(process_instance_id, process_dict, orderId):
 
     # Create a request payload
     request_payload = {
+        'resale_instance_id': resale_process_instance_id,
         'components': warehouse_components_lists[1]
     }
 
@@ -40,4 +47,4 @@ def create_list(process_instance_id, process_dict, orderId):
     # Print the response
     print(response)
         
-    return {"create_list": True}
+    return {"components_for_resale": response}

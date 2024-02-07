@@ -16,7 +16,6 @@ def send_quote(process_instance_id, process_dict, orderId):
         # list out keys and values separately
         key_list = list(process_dict.keys())
         val_list = list(process_dict.values())        
-        # print key with val 100
         position = val_list.index(process_instance_id)
         resale_process_instance_id = key_list[position]
         

@@ -25,6 +25,10 @@ def create_order(process_instance_id, process_dict):
                             "productId": 123,
                             "qty": 1
                         },
+                        {
+                            "productId": 456,
+                            "qty": 1
+                        }
                     ]
                 },
             ]

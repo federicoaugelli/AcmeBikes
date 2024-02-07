@@ -1,4 +1,9 @@
 type ComponentRequest: void{
+    .resale_instance_id: string
+    .components[0, *]: Component
+}
+
+type ComponentSupplierRequest: void{
     .components[0, *]: Component
 }
 

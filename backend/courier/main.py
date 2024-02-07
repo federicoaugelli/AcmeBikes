@@ -4,6 +4,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from model import components, components_list
+import os, json
+import pycamunda.processdef
+from pycamunda.message import CorrelateSingle
+from dotenv import load_dotenv
 
 app = FastAPI(
     title='Courier API',
@@ -32,4 +36,11 @@ def get_price_by_places(sender: str, receiver: str):
 
 @app.post("/shipment", tags=["courier"])
 def shipment(body: components_list):
+    load_dotenv()
+    CAMUNDA_URL = os.getenv("CAMUNDA_URL")
+    msg = CorrelateSingle(CAMUNDA_URL, message_name="components_received",
+                              process_instance_id=body.resale_instance_id
+                              )
+    msg.add_process_variable(name="components", value=json.dumps(body.components))
+    msg()
     return "Shipped successfully!"

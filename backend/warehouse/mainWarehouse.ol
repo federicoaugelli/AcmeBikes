@@ -14,7 +14,7 @@ interface CourierInterface {
 
 
 interface SupplierInterface {
-    RequestResponse: supplier(ComponentRequest)(string)
+    RequestResponse: supplier(ComponentSupplierRequest)(string)
 }
 
 outputPort CourierService {
@@ -67,9 +67,12 @@ main{
 				z = z + 1
 			}
 		}
+		componentsForCourier.resale_instance_id = componentsRequest.resale_instance_id
 		// Contattare corriere
-		shipment@CourierService(componentsForCourier)( courierResponse );
-    	println@Console( courierResponse )()
+		if (j > 0) {
+			shipment@CourierService(componentsForCourier)( courierResponse );
+			println@Console( courierResponse )()
+		}
 
 		response = componentsForAcmeBike
 	}]{

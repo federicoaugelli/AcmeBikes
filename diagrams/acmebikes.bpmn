@@ -186,7 +186,7 @@
       <bpmn:outgoing>Flow_0kvin64</bpmn:outgoing>
     </bpmn:manualTask>
     <bpmn:sequenceFlow id="Flow_0ixyj9x" sourceRef="Activity_19is611" targetRef="Event_0fyzojk" />
-    <bpmn:sendTask id="Activity_19is611" name="Send bicycle" camunda:type="external" camunda:topic="create_list">
+    <bpmn:sendTask id="Activity_19is611" name="Send bicycle" camunda:type="external" camunda:topic="send_bicycle">
       <bpmn:incoming>Flow_0kvin64</bpmn:incoming>
       <bpmn:outgoing>Flow_0ixyj9x</bpmn:outgoing>
     </bpmn:sendTask>
