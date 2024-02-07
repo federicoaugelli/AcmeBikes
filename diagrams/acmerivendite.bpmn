@@ -11,9 +11,7 @@
       <bpmn:outgoing>Flow_07k7jh2</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1hc0afx" messageRef="Message_1k8d8gk" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1k10wt2" sourceRef="Gateway_0fy346l" targetRef="Event_0pxil3v">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">{!order_accepted}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1k10wt2" sourceRef="Gateway_0fy346l" targetRef="Event_0pxil3v" />
     <bpmn:endEvent id="Event_0tediyv">
       <bpmn:incoming>Flow_07k7jh2</bpmn:incoming>
     </bpmn:endEvent>
@@ -23,9 +21,7 @@
       <bpmn:outgoing>Flow_0700yow</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_080sa2h" messageRef="Message_26loub3" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">order_accepted}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0omu0ou" sourceRef="Gateway_0fy346l" targetRef="Event_0b5b3te" />
     <bpmn:endEvent id="Event_1yqsgmt">
       <bpmn:incoming>Flow_1u17rmq</bpmn:incoming>
     </bpmn:endEvent>
@@ -133,11 +129,11 @@
       <bpmn:incoming>Flow_1cl0t3r</bpmn:incoming>
       <bpmn:outgoing>Flow_03fjyfm</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:exclusiveGateway id="Gateway_0fy346l">
+    <bpmn:eventBasedGateway id="Gateway_0fy346l">
       <bpmn:incoming>Flow_0nlmodn</bpmn:incoming>
       <bpmn:outgoing>Flow_1k10wt2</bpmn:outgoing>
       <bpmn:outgoing>Flow_0omu0ou</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
+    </bpmn:eventBasedGateway>
   </bpmn:process>
   <bpmn:message id="Message_0bkb3q7" name="Message_0bkb3q7" />
   <bpmn:message id="Message_20qo6rc" name="Message_20qo6rc" />
@@ -252,7 +248,7 @@
       <bpmndi:BPMNShape id="Activity_0wgly42_di" bpmnElement="Activity_1nlj7hr">
         <dc:Bounds x="1660" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1jmqg7k_di" bpmnElement="Gateway_0fy346l" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_1scjxgi_di" bpmnElement="Gateway_0fy346l">
         <dc:Bounds x="425" y="152" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0decigl_di" bpmnElement="Flow_0decigl">
