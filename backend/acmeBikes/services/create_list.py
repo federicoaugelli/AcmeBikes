@@ -1,7 +1,7 @@
 import requests
 from dotenv import load_dotenv
 import os
-import requests
+import requests, json
 from zeep import Client
 
 def create_list(process_instance_id, process_dict, orderId):
@@ -47,4 +47,4 @@ def create_list(process_instance_id, process_dict, orderId):
     # Print the response
     print(response)
         
-    return {"components_for_resale": response}
+    return {"components_for_resale": json.dumps(response)}
