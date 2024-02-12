@@ -1,3 +1,4 @@
+from verify_payment import verify_payment
 from worker import Worker
 from verify_customisation import verify_customisation
 from notify_client import notify_client
@@ -70,7 +71,7 @@ if __name__ == '__main__':
         variables=["process_instance_id", "process_dict", "pre_payment_token", "pre_payment_amount"])
     worker.subscribe(
         topic='verify_payment',
-        func=verify_prepayment,
+        func=verify_payment,
         variables=["process_instance_id", "process_dict", "payment_token", "payment_amount"])
     worker.subscribe(
         topic='token_accepted',

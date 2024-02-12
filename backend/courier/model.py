@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 
 class geo_distance(BaseModel):
@@ -15,12 +15,12 @@ class components(BaseModel):
     qty: int   
     assembleable: bool
 
-class bikes(BaseModel):
+class Bikes(BaseModel):
     bike_id: int
     qty: int  
 
 class components_list(BaseModel):
     resale_instance_id: str
     components: List[components]
-    bikes: List[bikes]
+    bikes: List[Bikes] = Field(default_factory=list)
     contact_resale: bool
