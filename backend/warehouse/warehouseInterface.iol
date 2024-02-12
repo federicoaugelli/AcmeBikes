@@ -3,6 +3,25 @@ type ComponentRequest: void{
     .components[0, *]: Component
 }
 
+type ComponentCourierRequest: void{
+    .resale_instance_id: string
+    .components[0, *]: Component
+    .contact_resale: bool
+}
+
+type BikeRequest: void{
+    .bikes[0, *]: Bike
+}
+
+type BikeResponse: void{
+    .bikes[0, *]: Bike
+}
+
+type Bike: void{
+    .bike_id: int
+    .qty: int
+}
+
 type ComponentSupplierRequest: void{
     .components[0, *]: Component
 }
@@ -17,12 +36,8 @@ type Component: void {
      .assembleable: bool
 }
 
-type Test: void {
-     .test: string
-}
-
 interface warehouseInterface {
-     RequestResponse: getStatus(Test)(Test)
+     RequestResponse: checkBikes(BikeRequest)(BikeResponse)
      RequestResponse: checkComponents(ComponentRequest)(ComponentResponse)
 }
 

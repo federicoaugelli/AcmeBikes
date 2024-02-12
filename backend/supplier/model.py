@@ -9,6 +9,12 @@ class components(BaseModel):
 class components_list(BaseModel):
     components: List[components]
 
+class bikes(BaseModel):
+    bike_id: int
+    qty: int   
+
+class bikes_list(BaseModel):
+    bikes: List[bikes]
 
 
 

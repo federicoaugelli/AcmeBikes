@@ -15,6 +15,12 @@ class components(BaseModel):
     qty: int   
     assembleable: bool
 
+class bikes(BaseModel):
+    bike_id: int
+    qty: int  
+
 class components_list(BaseModel):
     resale_instance_id: str
     components: List[components]
+    bikes: List[bikes]
+    contact_resale: bool

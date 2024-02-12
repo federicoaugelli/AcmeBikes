@@ -9,12 +9,13 @@ inputPort MainWarehouseService {
 }
 
 interface CourierInterface {
-    RequestResponse: shipment(ComponentRequest)(string)
+    RequestResponse: shipment(ComponentCourierRequest)(string)
 }
 
 
 interface SupplierInterface {
-    RequestResponse: supplier(ComponentSupplierRequest)(string)
+    RequestResponse: supplyComponents(ComponentSupplierRequest)(string)
+    RequestResponse: supplyBikes(BikeRequest)(string)
 }
 
 outputPort CourierService {
@@ -37,9 +38,18 @@ execution{ concurrent }
 
 main{
 
-	[getStatus(request)(response){
-		response.test = "OK"
+	[checkBikes(bikeRequest)(response){
+		i = 0
+		for (bike in bikeRequest.bikes) {
+			if (bike.qty < 0){
+				bikeForSupplier.bikes[i] << bike
+				i = i + 1
+			}
+		}
+		supplyBikes@SupplierService(bikeForSupplier)( supplierResponse );
+    	println@Console( supplierResponse )()
 
+		response = bikeRequest
 	}]{
 		println@Console( response )()
 	}
@@ -52,7 +62,7 @@ main{
 			}
 		}
 		// Chiedere al fornitore esterno
-		supplier@SupplierService(componentsForSupplier)( supplierResponse );
+		supplyComponents@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
 
 		j = 0
@@ -68,6 +78,8 @@ main{
 			}
 		}
 		componentsForCourier.resale_instance_id = componentsRequest.resale_instance_id
+		componentsForCourier.contact_resale = false
+		componentsForCourier.bikes = []
 		// Contattare corriere
 		if (j > 0) {
 			shipment@CourierService(componentsForCourier)( courierResponse );

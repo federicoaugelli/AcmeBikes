@@ -38,14 +38,15 @@ def get_price_by_places(sender: str, receiver: str):
 def shipment(body: components_list):
     load_dotenv()
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
-    try:
-        msg = CorrelateSingle(CAMUNDA_URL, message_name="components_received",
-                                process_instance_id=body.resale_instance_id
-                                )
-        serializable_body = body.dict()
-        msg.add_process_variable(name="components", value=json.dumps(serializable_body["components"]))
-        msg()
-    except Exception as e:
-        print(e)
-        pass
+    if (body.contact_resale):
+        try:
+            msg = CorrelateSingle(CAMUNDA_URL, message_name="components_received",
+                                    process_instance_id=body.resale_instance_id
+                                    )
+            serializable_body = body.dict()
+            msg.add_process_variable(name="components", value=json.dumps(serializable_body["components"]))
+            msg()
+        except Exception as e:
+            print(e)
+            pass
     return "Shipped successfully!"

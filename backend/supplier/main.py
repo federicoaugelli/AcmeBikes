@@ -1,7 +1,7 @@
 from typing import List, Union
 import requests
 from fastapi import FastAPI
-from model import components, components_list
+from model import bikes_list, components, components_list
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -18,8 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/supplier", tags=["supplier"])
+@app.post("/supplyComponents", tags=["supplier"])
 def get_component(body: components_list):
+   order = body
+   return "OK"
+
+@app.post("/supplyBikes", tags=["supplier"])
+def get_bikes(body: bikes_list):
    order = body
    return "OK"
     
