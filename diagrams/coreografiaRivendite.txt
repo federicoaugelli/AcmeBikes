@@ -1,4 +1,3 @@
-quando metto /vuol dire che va messa la liena sul nome dell'operazione
 CoreografiaOrdine :== (
 	/InvioOrdine@AcmeBike;
 	(
@@ -40,11 +39,9 @@ CoreografiaOrdine :== (
 				)|(
 					1;
 					(
-
-					)+(
 						1;
 						1;
-
+						
 						(
 							1;
 							InviaComponenti@CorriereEst;
