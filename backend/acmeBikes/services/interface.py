@@ -69,6 +69,10 @@ if __name__ == '__main__':
         func=verify_prepayment,
         variables=["process_instance_id", "process_dict", "pre_payment_token", "pre_payment_amount"])
     worker.subscribe(
+        topic='verify_payment',
+        func=verify_prepayment,
+        variables=["process_instance_id", "process_dict", "payment_token", "payment_amount"])
+    worker.subscribe(
         topic='token_accepted',
         func=token_accepted,
         variables=["process_instance_id", "process_dict"])
@@ -87,6 +91,6 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='payment',
         func=payment,
-        variables=["process_instance_id", "process_dict"])
+        variables=["process_instance_id", "process_dict", "order"])
     
     worker.run()

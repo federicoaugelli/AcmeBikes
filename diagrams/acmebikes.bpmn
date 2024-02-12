@@ -198,7 +198,7 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_0q8pbhr" messageRef="Message_303k537" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1w1rz6d" sourceRef="Activity_1yqgjxo" targetRef="Gateway_0833x2o" />
-    <bpmn:serviceTask id="Activity_1yqgjxo" name="Verify payment" camunda:type="external" camunda:topic="verify_prepayment">
+    <bpmn:serviceTask id="Activity_1yqgjxo" name="Verify payment" camunda:type="external" camunda:topic="verify_payment">
       <bpmn:incoming>Flow_1hvihjk</bpmn:incoming>
       <bpmn:outgoing>Flow_1w1rz6d</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -208,7 +208,7 @@
       <bpmn:outgoing>Flow_0b7teqf</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_0a273f7" name="Yes" sourceRef="Gateway_0833x2o" targetRef="Event_1j2r0jz">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${verify_prepayment}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${verify_payment}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0fn7u0n" sourceRef="Event_1j2r0jz" targetRef="Event_19kwt8v" />
     <bpmn:intermediateThrowEvent id="Event_1j2r0jz" name="Final payment accepted">
@@ -216,14 +216,15 @@
       <bpmn:outgoing>Flow_0fn7u0n</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_08eyt3r" camunda:type="external" camunda:topic="token_accepted" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_0b7teqf" name="No" sourceRef="Gateway_0833x2o" targetRef="Activity_0bzrypm">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!verify_prepayment}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_0b7teqf" name="No" sourceRef="Gateway_0833x2o" targetRef="Event_174cvfx">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!verify_payment}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sendTask id="Activity_0bzrypm" name="Notiy payment not valid" camunda:type="external" camunda:topic="token_refused">
+    <bpmn:sequenceFlow id="Flow_1u0ejgm" sourceRef="Event_174cvfx" targetRef="Event_0fyzojk" />
+    <bpmn:intermediateThrowEvent id="Event_174cvfx" name="Final payment refused">
       <bpmn:incoming>Flow_0b7teqf</bpmn:incoming>
       <bpmn:outgoing>Flow_1u0ejgm</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1u0ejgm" sourceRef="Activity_0bzrypm" targetRef="Event_0fyzojk" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1fljvis" camunda:type="external" camunda:topic="token_refused" />
+    </bpmn:intermediateThrowEvent>
   </bpmn:process>
   <bpmn:message id="Message_235ftt7" name="Message_235ftt7" />
   <bpmn:message id="Message_0m8ldjf" name="Message_0m8ldjf" />
@@ -362,8 +363,11 @@
           <dc:Bounds x="2556" y="125" width="71" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0o9643q_di" bpmnElement="Activity_0bzrypm">
-        <dc:Bounds x="2540" y="390" width="100" height="80" />
+      <bpmndi:BPMNShape id="BPMNShape_0jyrdvq" bpmnElement="Event_174cvfx">
+        <dc:Bounds x="2462" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2446" y="425" width="71" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0u2lx9a_di" bpmnElement="Flow_0u2lx9a">
         <di:waypoint x="500" y="560" />
@@ -511,15 +515,15 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0b7teqf_di" bpmnElement="Flow_0b7teqf">
         <di:waypoint x="2480" y="305" />
-        <di:waypoint x="2480" y="420" />
-        <di:waypoint x="2540" y="420" />
+        <di:waypoint x="2480" y="350" />
+        <di:waypoint x="2480" y="380" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2488" y="360" width="15" height="14" />
+          <dc:Bounds x="2488" y="322" width="15" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1u0ejgm_di" bpmnElement="Flow_1u0ejgm">
-        <di:waypoint x="2540" y="430" />
-        <di:waypoint x="2240" y="430" />
+        <di:waypoint x="2462" y="400" />
+        <di:waypoint x="2240" y="400" />
         <di:waypoint x="2240" y="298" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
