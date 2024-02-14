@@ -19,7 +19,7 @@ def create_list(process_instance_id, process_dict, orderId):
     
     ordered_components = requests.get(f"{DB_URL}/orderedcomponent?orderId={orderId.value}").json()
     all_warehouses = requests.get(f"{DB_URL}/warehouses").json()
-    order = requests.get(f"{DB_URL}/order?order_id={orderId.value}").json()
+    all_warehouses = [warehouse for warehouse in all_warehouses if warehouse[0] != 1]
     warehouse_components_lists = {warehouse[0]: [] for warehouse in all_warehouses}
     warehouse_bikes_lists = {warehouse[0]: [] for warehouse in all_warehouses}
 
@@ -34,27 +34,43 @@ def create_list(process_instance_id, process_dict, orderId):
                                                              "qty": component[5] - ordered_component[4],
                                                              "assembleable": component[4]})
 
-    client = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
-
-    # Create a request payload
-    request_payload = {
-        'resale_instance_id': resale_process_instance_id,
-        'components': warehouse_components_lists[1]
-    }
-
-    # Make the SOAP call
-    component_response = client.service.checkComponents(**request_payload)
-
-    bike_request_payload = {
-        'bikes': warehouse_bikes_lists[1]
-    }
-
-    # Make the SOAP call
-    bike_response = client.service.checkBikes(**bike_request_payload)
+    mainWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
+    secondaryWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\secondaryWarehouse.wsdl')
 
     components_for_resale = {
-        "components": component_response,
-        "bikes": bike_response
+        "components": [],
+        "bikes": []
     }
+
+    # Create a request payload
+    for warehouse in all_warehouses:
+        request_payload = {
+            'resale_instance_id': resale_process_instance_id,
+            'components': warehouse_components_lists[warehouse[0]]
+        }
+
+        bike_request_payload = {
+            'bikes': warehouse_bikes_lists[warehouse[0]]
+        }
+
+        component_response = {}
+        bike_response = {}
+        # Make the SOAP call
+        if warehouse[1] == "magazzino principale":
+            if warehouse_components_lists[warehouse[0]]:
+                component_response = mainWarehouseClient.service.checkComponents(**request_payload)
+            if warehouse_bikes_lists[warehouse[0]]:
+                bike_response = mainWarehouseClient.service.checkBikes(**bike_request_payload)
+        else:
+            if warehouse_components_lists[warehouse[0]]:
+                component_response = secondaryWarehouseClient.service.checkComponents(**request_payload)
+            if warehouse_bikes_lists[warehouse[0]]:
+                bike_response = secondaryWarehouseClient.service.checkBikes(**bike_request_payload)
+        
+        # add to components_for_resale components and bikes the response of the SOAP call. check that the fields are not empty object or none
+        if component_response:
+            components_for_resale["components"].extend(component_response.components)
+        if bike_response:
+            components_for_resale["bikes"].extend(bike_response.bikes)
         
     return {"components_for_resale": json.dumps(components_for_resale)}

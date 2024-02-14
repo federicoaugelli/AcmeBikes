@@ -2,8 +2,8 @@ include "console.iol"
 include "warehouseInterface.iol"
 include "json_utils.iol"
 
-inputPort MainWarehouseService {
-	Location: "socket://localhost:8085"
+inputPort SecondaryWarehouseService {
+	Location: "socket://localhost:8086"
 	Protocol: soap
 	Interfaces: WarehouseInterface
 }
@@ -37,7 +37,6 @@ outputPort SupplierService {
 execution{ concurrent }
 
 main{
-
 	[checkBikes(bikeRequest)(response){
 		i = 0
 		for (bike in bikeRequest.bikes) {

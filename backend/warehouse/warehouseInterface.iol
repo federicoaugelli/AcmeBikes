@@ -36,7 +36,7 @@ type Component: void {
      .assembleable: bool
 }
 
-interface warehouseInterface {
+interface WarehouseInterface {
      RequestResponse: checkBikes(BikeRequest)(BikeResponse)
      RequestResponse: checkComponents(ComponentRequest)(ComponentResponse)
 }
