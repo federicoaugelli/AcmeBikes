@@ -5,7 +5,7 @@ from pycamunda.message import CorrelateSingle
 from dotenv import load_dotenv
 import os, json
 
-def send_quote(process_instance_id, process_dict, orderId):
+def send_quote(process_instance_id, process_dict, orderId, discount):
     """ chiamata AcmeDB per mandare il preventivo """
     load_dotenv()
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
@@ -13,6 +13,8 @@ def send_quote(process_instance_id, process_dict, orderId):
     print(f"send_quote {process_instance_id}")
     try:
         order = requests.get(f"{DB_URL}/order?order_id={orderId.value}").json()
+        if discount.value != 0:
+            order = requests.put(f"{DB_URL}/order/discount", json={"order_id": order[0], "perc": discount.value}).json()
         # list out keys and values separately
         key_list = list(process_dict.keys())
         val_list = list(process_dict.values())        
@@ -25,7 +27,6 @@ def send_quote(process_instance_id, process_dict, orderId):
                               process_instance_id=resale_process_instance_id
                               )
         msg.add_process_variable(name="order", value=json.dumps(order))
-        # Mando anche preventivo e spedizione per mostrarli sul camunda form, sarà poi da mandare a frontend
         msg.add_process_variable(name="price", value=order[1])
         msg.add_process_variable(name="shipment", value=order[4])
         msg()

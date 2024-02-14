@@ -191,7 +191,7 @@ def apply_discount(order_id, perc):
         connection, cursor = connect(path)
         cursor.execute(data, data_var)
         connection.commit()
-        return(f"discount applied")
+        return(get_order(order_id))
     except sqlite3.Error as e:
         return("Failed to apply discount: ", e)
 

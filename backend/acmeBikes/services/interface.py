@@ -15,22 +15,12 @@ from create_list import create_list
 from send_bicycle import send_bicycle
 from payment import payment
 
-def test_function():
-    print('ciao')
-    return {}
-
 if __name__ == '__main__':
     print("ACMEManager Camunda Server started.")
     url = 'http://localhost:8080/engine-rest'
     worker_id = '1'
     worker = Worker(url=url, worker_id=worker_id)
     # I Topic vengono assegnati al worker
-    worker.subscribe(
-        topic='test_external_task',
-        func=test_function,
-        variables=["process_instance_id", "process_dict"]
-    )
-
     worker.subscribe(
         topic='verify_customisation',
         func=verify_customisation,
@@ -52,7 +42,7 @@ if __name__ == '__main__':
     worker.subscribe(
         topic='send_quote',
         func=send_quote,
-        variables=["process_instance_id", "process_dict", "orderId"])
+        variables=["process_instance_id", "process_dict", "orderId", "discount"])
     worker.subscribe(
         topic='send_accept_quote',
         func=send_accept_quote,

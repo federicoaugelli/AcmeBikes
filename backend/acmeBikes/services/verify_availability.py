@@ -126,4 +126,4 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
     except Exception as e:
         print(e)
         pass
-    return {"preventivo": price}
+    return {"preventivo": price, "discount": 0}

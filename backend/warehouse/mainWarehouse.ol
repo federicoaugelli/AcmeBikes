@@ -79,7 +79,6 @@ main{
 		}
 		componentsForCourier.resale_instance_id = componentsRequest.resale_instance_id
 		componentsForCourier.contact_resale = false
-		componentsForCourier.bikes = []
 		// Contattare corriere
 		if (j > 0) {
 			shipment@CourierService(componentsForCourier)( courierResponse );
