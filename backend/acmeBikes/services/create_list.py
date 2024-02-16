@@ -34,8 +34,10 @@ def create_list(process_instance_id, process_dict, orderId):
                                                              "qty": component[5] - ordered_component[4],
                                                              "assembleable": component[4]})
 
-    mainWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
-    secondaryWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\secondaryWarehouse.wsdl')
+    #mainWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')
+    mainWarehouseClient = Client(wsdl='../../../backend/warehouse/warehouse.wsdl')
+    #secondaryWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\secondaryWarehouse.wsdl')
+    secondaryWarehouseClient = Client(wsdl='../../../backend/warehouse/secondaryWarehouse.wsdl')
 
     components_for_resale = {
         "components": [],
