@@ -59,8 +59,10 @@ main{
 				i = i + 1
 			}
 		}
-		supplyBikes@SupplierService(bikeForSupplier)( supplierResponse );
-    	println@Console( supplierResponse )()
+		if (i > 0){
+			supplyBikes@SupplierService(bikeForSupplier)( supplierResponse );
+			println@Console( supplierResponse )()
+		}
 
 		for (bike in bikeForSupplier.bikes) {
 			request.bike_id = bike.bike_id
@@ -82,8 +84,10 @@ main{
 			}
 		}
 		// Chiedere al fornitore esterno
-		supplyComponents@SupplierService(componentsForSupplier)( supplierResponse );
-    	println@Console( supplierResponse )()
+		if (i > 0) {
+			supplyComponents@SupplierService(componentsForSupplier)( supplierResponse );
+			println@Console( supplierResponse )()
+		}
 
 		for (component in componentsForSupplier.components) {
 			request.prod_id = component.component_id
