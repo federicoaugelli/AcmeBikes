@@ -39,6 +39,10 @@ class create_component(BaseModel):
     ty: str
     location: int
 
+class modify_component(BaseModel):
+    prod_id: int
+    qty: int
+
 class create_bike(BaseModel):
     productId: int
     name: str
@@ -46,6 +50,10 @@ class create_bike(BaseModel):
     qty: int
     color: str
     location: int
+
+class modify_bike(BaseModel):
+    bike_id: int
+    qty: int
 
 class create_customisation(BaseModel):
     bikeId: int

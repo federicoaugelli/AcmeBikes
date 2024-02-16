@@ -18,6 +18,11 @@ interface SupplierInterface {
     RequestResponse: supplyBikes(BikeRequest)(string)
 }
 
+interface AcmeDBInterface {
+    RequestResponse: component(ModifyComponent)(string)
+    RequestResponse: bike(ModifyBike)(string)
+}
+
 outputPort CourierService {
     Location: "socket://localhost:8001/"
     Protocol: http { 
@@ -32,6 +37,14 @@ outputPort SupplierService {
 		.method = "post"
 		.format = "json" }
     Interfaces: SupplierInterface
+}
+
+outputPort AcmeDBService {
+    Location: "socket://localhost:8004/"
+    Protocol: http { 
+		.method = "put"
+		.format = "json" }
+    Interfaces: AcmeDBInterface
 }
 
 execution{ concurrent }
@@ -49,6 +62,13 @@ main{
 		supplyBikes@SupplierService(bikeForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
 
+		for (bike in bikeForSupplier.bikes) {
+			request.bike_id = bike.bike_id
+			request.qty = bike.qty * -1
+			bike@AcmeDBService(request)( dbResponse );
+    		println@Console( dbResponse )()
+		}
+
 		response = bikeRequest
 	}]{
 		println@Console( response )()
@@ -64,6 +84,13 @@ main{
 		// Chiedere al fornitore esterno
 		supplyComponents@SupplierService(componentsForSupplier)( supplierResponse );
     	println@Console( supplierResponse )()
+
+		for (component in componentsForSupplier.components) {
+			request.prod_id = component.component_id
+			request.qty = component.qty * -1
+			component@AcmeDBService(request)( dbResponse );
+    		println@Console( dbResponse )()
+		}
 
 		j = 0
 		z = 0

@@ -55,7 +55,7 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
             requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
 
             # Update bike quantity
-            requests.put(f"{DB_URL}/bike?bike_id={choosed_bike[0]}&qty={-1*bike['qty']}")
+            requests.put(f"{DB_URL}/bike" , json = {"bike_id":choosed_bike[0], "qty":-1*bike['qty']})
 
             price += choosed_bike[3] * bike['qty']
 
@@ -88,7 +88,7 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
                     requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
 
                     # Update component quantity
-                    requests.put(f"{DB_URL}/component?prod_id={choosed_component[0]}&qty={-1*component['qty']}")
+                    requests.put(f"{DB_URL}/component", json={"prod_id":choosed_component[0], "qty":-1*component['qty']})
 
                     # Calculate shipping cost
                     shipment += int(requests.get(f"{COURIER_URL}/shipment/price/{address}/{order_obj['address']}").text)
@@ -116,7 +116,7 @@ def verify_availability(process_instance_id, process_dict, orderId, order):
                     requests.post(f"{DB_URL}/orderedcomponent", json=create_ordered_component)
 
                     # Update component quantity
-                    requests.put(f"{DB_URL}/component?prod_id={choosed_component[0]}&qty={-1*component['qty']}")
+                    requests.put(f"{DB_URL}/component", json={"prod_id":choosed_component[0], "qty":-1*component['qty']})
 
                 price += sum(_comp[3] * component['qty'] for _comp in components)
                 

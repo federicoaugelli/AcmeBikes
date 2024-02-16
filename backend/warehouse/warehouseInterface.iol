@@ -20,6 +20,7 @@ type BikeResponse: void{
 type Bike: void{
     .bike_id: int
     .qty: int
+    .ordered_qty: int
 }
 
 type ComponentSupplierRequest: void{
@@ -30,9 +31,20 @@ type ComponentResponse: void{
     .components[0, *]: Component
 }
 
+type ModifyBike: void { 
+    .bike_id: int
+    .qty: int 
+}
+
+type ModifyComponent: void { 
+    .prod_id: int
+    .qty: int 
+}
+
 type Component: void {
      .component_id: int
      .qty: int
+     .ordered_qty: int
      .assembleable: bool
 }
 

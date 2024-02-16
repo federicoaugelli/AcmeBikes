@@ -27,11 +27,13 @@ def create_list(process_instance_id, process_dict, orderId):
         if ordered_component[1] == 0:
             bike = requests.get(f"{DB_URL}/bike/single?Id={ordered_component[2]}").json()
             warehouse_bikes_lists[bike[6]].append({"bike_id": bike[0],
-                                                   "qty": bike[4] - ordered_component[4] })
+                                                   "qty": bike[4],
+                                                    "ordered_qty": ordered_component[4] })
         elif ordered_component[2] == 0:
             component = requests.get(f"{DB_URL}/component/single?Id={ordered_component[1]}").json()
             warehouse_components_lists[component[7]].append({"component_id": component[0], 
-                                                             "qty": component[5] - ordered_component[4],
+                                                             "qty": component[5],
+                                                             "ordered_qty": ordered_component[4],
                                                              "assembleable": component[4]})
 
     #mainWarehouseClient = Client(wsdl='..\\..\\..\\backend\\warehouse\\warehouse.wsdl')

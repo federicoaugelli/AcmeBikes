@@ -12,11 +12,13 @@ class user_address(BaseModel):
 
 class components(BaseModel):
     component_id: int
-    qty: int   
+    qty: int       
+    ordered_qty: int
     assembleable: bool
 
 class Bikes(BaseModel):
     bike_id: int
+    ordered_qty: int
     qty: int  
 
 class components_list(BaseModel):

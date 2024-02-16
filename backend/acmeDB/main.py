@@ -1,6 +1,6 @@
 import database.dataAcme as db
 from fastapi import FastAPI, status, HTTPException, Depends, Body
-from model import create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment, create_bike, create_customisation
+from model import modify_component, modify_bike, create_warehouse, create_order, create_ordered_component, create_component, modify_order, apply_discount, add_shipment, create_bike, create_customisation
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os, requests
@@ -154,9 +154,9 @@ def create_component(body: create_component):
         return e
 
 @app.put("/component", tags=["components"])
-def modify_component(prod_id: int, qty: int):
+def modify_component(body: modify_component):
     try:
-        component = db.modify_component(prod_id, qty)
+        component = db.modify_component(body.prod_id, body.qty)
         return(component)
     except Exception as e:
         return e
@@ -198,9 +198,9 @@ def create_bike(body: create_bike):
         return e
 
 @app.put("/bike", tags=["bikes"])
-def modify_bike(bike_id: int, qty: int):
+def modify_bike(body: modify_bike):
     try:
-        bike = db.modify_bike(bike_id, qty)
+        bike = db.modify_bike(body.bike_id, body.qty)
         return bike
     except Exception as e:
         return e
