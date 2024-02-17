@@ -77,8 +77,7 @@ def check_token(body: check_token_body):
         tx = db.get_tx(tx_id)
         if int(tx[3]) == amount:
             return True
-        else:
-            return False
+        return False
     except:
-        return("error")
+        return False
 

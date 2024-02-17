@@ -13,8 +13,9 @@ def verify_customisation(process_instance_id, process_dict, order):
     # Check if the bike is customisable
     for bike in order_obj['bikes']:
         for component in bike['components']:
-            isCustomisable = requests.get(f"{DB_URL}/custom?bike_id={bike['productId']}&component_id={component['productId']}")
-            if not isCustomisable:
+            isCustomisable = requests.get(f"{DB_URL}/custom?bike_id={bike['productId']}&component_id={component['productId']}").json()
+            if not bool(isCustomisable):
+                print("not customisable")
                 return {"isCustomisable": False}
             
     # If the bike is customisable, create the order

@@ -13,6 +13,7 @@ def notify_client(process_instance_id, process_dict):
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
     print(f"notify_client {process_instance_id}")
     try:
+        
         # list out keys and values separately
         key_list = list(process_dict.keys())
         val_list = list(process_dict.values())        

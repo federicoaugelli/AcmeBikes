@@ -6,7 +6,6 @@ import pycamunda.processdef
 from pycamunda.message import CorrelateSingle
 
 def payment(process_instance_id, process_dict, order):
-    # TODO: richiesta al db per cancellare ordine e finire
     print(f"payment {process_instance_id}")
     order_obj = json.loads(order.value)
     total_price = order_obj[1] + order_obj[4]

@@ -14,19 +14,19 @@ def create_order(process_instance_id, process_dict):
     print(f"create_order {process_instance_id}")
     try:
         order = {
-            "customer": "mario rossi",
-            "address": "via roma 2",
+            "customer": "Michele Abruzzese",
+            "address": "via ercolani 1, Bologna",
             "bikes": [
                 {
-                    "productId": 234,
+                    "productId": 4123,
                     "qty": 1,
                     "components": [
                         {
-                            "productId": 123,
+                            "productId": 5192,
                             "qty": 1
                         },
                         {
-                            "productId": 456,
+                            "productId": 6532,
                             "qty": 1
                         }
                     ]
