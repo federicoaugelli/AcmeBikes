@@ -7,7 +7,9 @@ def verify_prepayment(process_instance_id, process_dict, pre_payment_token, pre_
     print(f"verify_prepayment {process_instance_id}")
     load_dotenv()
     BANK_URL = os.getenv("BANK_URL")
-    login = requests.post(f"{BANK_URL}/login", json={"username": "luca", "password": "luca"})
+    ACME_USER = os.getenv("ACME_USER")
+    ACME_PASS = os.getenv("ACME_PASS")
+    login = requests.post(f"{BANK_URL}/login", json={"username": ACME_USER, "password": ACME_PASS})
     token = login.json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
 

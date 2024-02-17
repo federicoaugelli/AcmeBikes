@@ -15,10 +15,10 @@ def payment(process_instance_id, process_dict, order):
     BANK_URL = os.getenv("BANK_URL")
     ACME_BANK_ID = os.getenv("ACME_BANK_ID")
     CAMUNDA_URL = os.getenv("CAMUNDA_URL")
+    CUSTOMER_USER = os.getenv("CUSTOMER_USER")
+    CUSTOMER_PASS = os.getenv("CUSTOMER_PASS")
 
-    username = "a"
-    password = "a"
-    login = requests.post(f"{BANK_URL}/login", json={"username": username, "password": password})
+    login = requests.post(f"{BANK_URL}/login", json={"username": CUSTOMER_USER, "password": CUSTOMER_PASS})
     token = login.json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
 
