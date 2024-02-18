@@ -1,7 +1,0 @@
-{
-  "name": "rivendita",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "vue-vite"
-}
