@@ -14,7 +14,7 @@ def create_order(process_instance_id, process_dict):
     print(f"create_order {process_instance_id}")
     try:
         order = {
-            "customer": "luca",
+            "customer": "Mario Rossi",
             "address": "via ercolani 1, Bologna",
             "bikes": [
                 {

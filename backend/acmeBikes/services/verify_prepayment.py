@@ -14,5 +14,10 @@ def verify_prepayment(process_instance_id, process_dict, pre_payment_token, pre_
     headers = {"Authorization": f"Bearer {token}"}
 
     check_token = requests.post(f"{BANK_URL}/checktoken", json={"tx_id": int(pre_payment_token.value), "amount": float(pre_payment_amount.value)}, headers=headers)
-
-    return {"verify_prepayment": bool(check_token.text)}
+    print(f"check_token: {check_token.text}, type: {type(check_token.text)}")
+  
+    bool_token = True
+    if(check_token.text == "false"):
+        bool_token = False
+    #return {"verify_prepayment": False}
+    return {"verify_prepayment": bool_token}

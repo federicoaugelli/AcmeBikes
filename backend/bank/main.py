@@ -61,7 +61,10 @@ def pay(body: payment_body, dependencies=Depends(JWTBearer())):
         amount = body.amount
         sender_balance = db.get_user_balance(body.sender)
         if int(sender_balance[0]) <= amount:
-            return None
+            s = db.update_user_balance(body.sender, -sender_balance[0])
+            r = db.update_user_balance(body.receiver, sender_balance[0])
+            tx = db.insert_tx(body.sender, body.receiver, sender_balance[0])
+            return tx
         s = db.update_user_balance(body.sender, -amount)
         r = db.update_user_balance(body.receiver, amount)
         tx = db.insert_tx(body.sender, body.receiver, amount)
